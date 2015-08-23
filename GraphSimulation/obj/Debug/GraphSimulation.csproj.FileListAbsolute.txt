@@ -1,1 +1,10 @@
 c:\users\cristian\documents\visual studio 2013\Projects\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.pdb
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\bin\Debug\System.Windows.Forms.Ribbon35.dll
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.exe
+C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.pdb
