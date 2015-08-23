@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ribbon1 = new System.Windows.Forms.Ribbon();
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = "Form1";
+            this.Controls.Add(ribbon1);
         }
+        private System.Windows.Forms.Ribbon ribbon1;
 
         #endregion
     }
