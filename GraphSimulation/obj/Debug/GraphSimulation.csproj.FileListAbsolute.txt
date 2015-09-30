@@ -8,3 +8,13 @@ C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSim
 C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
 C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.exe
 C:\Users\Cristian\Documents\Visual Studio 2013\Projects\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.pdb
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.exe
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.pdb
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.pdb
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
+F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache

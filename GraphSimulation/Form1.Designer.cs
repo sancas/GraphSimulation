@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ribbon1 = new System.Windows.Forms.Ribbon();
             this.ribbonOrbMenuItem1 = new System.Windows.Forms.RibbonOrbMenuItem();
@@ -51,8 +52,11 @@
             this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
             this.pbCanvas = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CMSCrearVertice = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nuevoVerticeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbCanvas)).BeginInit();
             this.panel1.SuspendLayout();
+            this.CMSCrearVertice.SuspendLayout();
             this.SuspendLayout();
             // 
             // ribbon1
@@ -368,7 +372,12 @@
             this.pbCanvas.TabIndex = 1;
             this.pbCanvas.TabStop = false;
             this.pbCanvas.Visible = false;
+            this.pbCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.pbCanvas_Paint);
             this.pbCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseClick);
+            this.pbCanvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseDown);
+            this.pbCanvas.MouseLeave += new System.EventHandler(this.pbCanvas_MouseLeave);
+            this.pbCanvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseMove);
+            this.pbCanvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseUp);
             // 
             // panel1
             // 
@@ -379,6 +388,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(727, 273);
             this.panel1.TabIndex = 2;
+            // 
+            // CMSCrearVertice
+            // 
+            this.CMSCrearVertice.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nuevoVerticeToolStripMenuItem});
+            this.CMSCrearVertice.Name = "CMSCrearVertice";
+            this.CMSCrearVertice.Size = new System.Drawing.Size(153, 48);
+            // 
+            // nuevoVerticeToolStripMenuItem
+            // 
+            this.nuevoVerticeToolStripMenuItem.Name = "nuevoVerticeToolStripMenuItem";
+            this.nuevoVerticeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nuevoVerticeToolStripMenuItem.Text = "Nuevo vertice";
+            this.nuevoVerticeToolStripMenuItem.Click += new System.EventHandler(this.nuevoVerticeToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -394,6 +417,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbCanvas)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.CMSCrearVertice.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -421,6 +445,8 @@
         private System.Windows.Forms.RibbonButton ribbonButton2;
         private System.Windows.Forms.PictureBox pbCanvas;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ContextMenuStrip CMSCrearVertice;
+        private System.Windows.Forms.ToolStripMenuItem nuevoVerticeToolStripMenuItem;
 
     }
 }
