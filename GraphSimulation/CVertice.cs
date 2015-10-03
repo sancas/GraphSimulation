@@ -108,7 +108,7 @@ namespace GraphSimulation
                     g.DrawString(
                         arco.peso.ToString(),
                         new Font("Times New Roman ", 12),
-                        new SolidBrush(Color.White),
+                        new SolidBrush(Color.Black),
                         this._posicion.X - (int)((difX / 3)),
                         this._posicion.Y - (int)((difY / 3)),
                         new StringFormat() {
@@ -130,7 +130,8 @@ namespace GraphSimulation
             posicion.Dispose();
             return retval;
         }
-        public string ToString() {
+
+        override public string ToString() {
             return this.Valor;
         }
     }

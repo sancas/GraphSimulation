@@ -49,6 +49,7 @@
             this.btnNewNode = new System.Windows.Forms.RibbonButton();
             this.btnDelNode = new System.Windows.Forms.RibbonButton();
             this.btnMoveNode = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel4 = new System.Windows.Forms.RibbonPanel();
             this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
             this.pbCanvas = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -280,6 +281,7 @@
             // ribbonTab2
             // 
             this.ribbonTab2.Panels.Add(this.ribbonPanel2);
+            this.ribbonTab2.Panels.Add(this.ribbonPanel4);
             this.ribbonTab2.Tag = null;
             this.ribbonTab2.Text = "Nodo";
             this.ribbonTab2.ToolTip = null;
@@ -300,7 +302,6 @@
             // 
             this.btnNewNode.AltKey = null;
             this.btnNewNode.CheckedGroup = null;
-            this.btnNewNode.CheckOnClick = true;
             this.btnNewNode.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
             this.btnNewNode.DropDownArrowSize = new System.Drawing.Size(5, 3);
             this.btnNewNode.Image = ((System.Drawing.Image)(resources.GetObject("btnNewNode.Image")));
@@ -345,6 +346,11 @@
             this.btnMoveNode.Value = null;
             this.btnMoveNode.Click += new System.EventHandler(this.btnMoveNode_Click);
             // 
+            // ribbonPanel4
+            // 
+            this.ribbonPanel4.Tag = null;
+            this.ribbonPanel4.Text = "Recorridos";
+            // 
             // ribbonButton1
             // 
             this.ribbonButton1.AltKey = null;
@@ -373,7 +379,6 @@
             this.pbCanvas.TabStop = false;
             this.pbCanvas.Visible = false;
             this.pbCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.pbCanvas_Paint);
-            this.pbCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseClick);
             this.pbCanvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseDown);
             this.pbCanvas.MouseLeave += new System.EventHandler(this.pbCanvas_MouseLeave);
             this.pbCanvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbCanvas_MouseMove);
@@ -394,12 +399,12 @@
             this.CMSCrearVertice.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nuevoVerticeToolStripMenuItem});
             this.CMSCrearVertice.Name = "CMSCrearVertice";
-            this.CMSCrearVertice.Size = new System.Drawing.Size(153, 48);
+            this.CMSCrearVertice.Size = new System.Drawing.Size(148, 26);
             // 
             // nuevoVerticeToolStripMenuItem
             // 
             this.nuevoVerticeToolStripMenuItem.Name = "nuevoVerticeToolStripMenuItem";
-            this.nuevoVerticeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nuevoVerticeToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.nuevoVerticeToolStripMenuItem.Text = "Nuevo vertice";
             this.nuevoVerticeToolStripMenuItem.Click += new System.EventHandler(this.nuevoVerticeToolStripMenuItem_Click);
             // 
@@ -447,7 +452,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ContextMenuStrip CMSCrearVertice;
         private System.Windows.Forms.ToolStripMenuItem nuevoVerticeToolStripMenuItem;
-
+        private System.Windows.Forms.RibbonPanel ribbonPanel4;
     }
 }
 

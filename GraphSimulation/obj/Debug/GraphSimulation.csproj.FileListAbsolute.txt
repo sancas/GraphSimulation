@@ -18,3 +18,14 @@ F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulati
 F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
 F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
 F:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.exe
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.pdb
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.pdb
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources

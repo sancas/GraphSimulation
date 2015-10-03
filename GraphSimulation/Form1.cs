@@ -21,7 +21,9 @@ namespace GraphSimulation
         private int var_control = 0; // la utilizaremos para determinar el estado en la pizarra:
         // 0 -> sin acción, 1 -> Dibujando arco, 2 -> Nuevo vértice
         // variables para el control de ventanas modales
-        private Vertice ventanaVertice; // ventana para agregar los vértices
+        private Vertice ventanaVertice; // ventana para agregar los vértices
+        private Arco ventanaArco; // ventana para agregar los arcos
+
         public Form1()
         {
             InitializeComponent();
@@ -29,8 +31,10 @@ namespace GraphSimulation
             nuevoNodo = null;
             var_control = 0;
             ventanaVertice = new Vertice();
+            ventanaArco = new Arco();
 
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+
         }
 
         private void btnNewFile_Click(object sender, EventArgs e)
@@ -38,7 +42,6 @@ namespace GraphSimulation
             pbCanvas.Width = panel1.Width / 2;
             pbCanvas.Height = panel1.Height;
             pbCanvas.Left = (panel1.Width - pbCanvas.Width) / 2;
-            //myGraph = pbCanvas.CreateGraphics();
             pbCanvas.Enabled = true;
             pbCanvas.Visible = true;
         }
@@ -74,15 +77,10 @@ namespace GraphSimulation
 
         private void btnNewNode_Click(object sender, EventArgs e)
         {
-            if (btnNewNode.Checked)
-            {
-                this.Cursor = Cursors.Cross;
-                nuevoNodo = new CVertice();
-                var_control = 2; // recordemos que es usado para indicar el estado en la pizarra: 0 ->
-                // sin accion, 1 -> Dibujando arco, 2 -> Nuevo vértice
-            }
-            else
-                this.Cursor = Cursors.Default;
+            this.Cursor = Cursors.Cross;
+            nuevoNodo = new CVertice();
+            var_control = 2; // recordemos que es usado para indicar el estado en la pizarra: 0 ->
+            // sin accion, 1 -> Dibujando arco, 2 -> Nuevo vértice
         }
 
         private void btnDelNode_Click(object sender, EventArgs e)
@@ -93,10 +91,6 @@ namespace GraphSimulation
         private void btnMoveNode_Click(object sender, EventArgs e)
         {
             MessageBox.Show("\"Move Node\" Clicked");
-        }
-
-        private void pbCanvas_MouseClick(object sender, MouseEventArgs e)
-        {
         }
 
         private void pbCanvas_Paint(object sender, PaintEventArgs e)
@@ -122,12 +116,18 @@ namespace GraphSimulation
             switch (var_control)
             {
                 case 1: // Dibujando arco
+                    ventanaArco.Visible = false;
+                    ventanaArco.control = false;
                     if ((NodoDestino = grafo.DetectarPunto(e.Location)) != null && NodoOrigen != NodoDestino)
                     {
-                        if (grafo.AgregarArco(NodoOrigen, NodoDestino)) //Se procede a crear la arista
+                        ventanaArco.ShowDialog();
+                        if (ventanaArco.control)
                         {
-                            int distancia = 0;
-                            NodoOrigen.ListaAdyacencia.Find(v => v.nDestino == NodoDestino).peso = distancia;
+                            if (grafo.AgregarArco(NodoOrigen, NodoDestino)) //Se procede a crear la arista
+                            {
+                                int distancia = int.Parse(ventanaArco.txtArco.Text); ;
+                                NodoOrigen.ListaAdyacencia.Find(v => v.nDestino == NodoDestino).peso = distancia;
+                            }
                         }
                     }
                     var_control = 0;
@@ -200,8 +200,9 @@ namespace GraphSimulation
                             MessageBox.Show("El Nodo " + ventanaVertice.txtVertice.Text + " ya existe en el grafo ", "Error nuevo Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
                     }
-                    nuevoNodo = null;
                     var_control = 0;
+                    nuevoNodo = null;
+                    this.Cursor = Cursors.Default;
                     pbCanvas.Refresh();
                 }
             }
@@ -222,9 +223,7 @@ namespace GraphSimulation
 
         private void nuevoVerticeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            nuevoNodo = new CVertice();
-            var_control = 2; // recordemos que es usado para indicar el estado en la pizarra: 0 ->
-            // sin accion, 1 -> Dibujando arco, 2 -> Nuevo vértice
+            btnNewNode.PerformClick();
         }
     }
 }
