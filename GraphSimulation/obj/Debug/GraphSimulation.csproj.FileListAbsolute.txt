@@ -29,3 +29,4 @@ C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulatio
 C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
 C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
 C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
+C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Recorrido.resources

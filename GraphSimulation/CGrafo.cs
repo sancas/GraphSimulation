@@ -78,8 +78,10 @@ namespace GraphSimulation
         {
             foreach (CVertice nodo in nodos)
             {
-                nodo.Color = Color.White;
-                nodo.FontColor = Color.Black;
+                nodo.Color = Color.Green;
+                nodo.FontColor = Color.White;
+                nodo.Visitado = false;
+                nodo.Padre = null;
                 foreach (CArco arco in nodo.ListaAdyacencia)
                 {
                     arco.grosor_flecha = 1;
@@ -87,6 +89,12 @@ namespace GraphSimulation
                 }
             }
             DibujarGrafo(g);
+        }
+        //Metodo para resaltar nodos del grafo
+        public void Colorear(CVertice nodo)
+        {
+            nodo.Color = Color.AliceBlue;
+            nodo.FontColor = Color.Black;
         }
     }
 }

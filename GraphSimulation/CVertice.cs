@@ -14,6 +14,8 @@ namespace GraphSimulation
         public List < CArco > ListaAdyacencia; // Lista de adyacencia del nodo
         Dictionary < string, short > _banderas;
         Dictionary < string, short > _banderas_predeterminado;
+        public Boolean Visitado;
+        public CVertice Padre;
         // Propiedades
         public Color Color {
             get {

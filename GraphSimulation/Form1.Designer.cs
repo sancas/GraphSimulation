@@ -55,6 +55,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.CMSCrearVertice = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.nuevoVerticeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnRecorridoAnchura = new System.Windows.Forms.RibbonButton();
+            this.ribbonButton4 = new System.Windows.Forms.RibbonButton();
+            this.btnRecorridoProfundidad = new System.Windows.Forms.RibbonButton();
             ((System.ComponentModel.ISupportInitialize)(this.pbCanvas)).BeginInit();
             this.panel1.SuspendLayout();
             this.CMSCrearVertice.SuspendLayout();
@@ -348,6 +351,8 @@
             // 
             // ribbonPanel4
             // 
+            this.ribbonPanel4.Items.Add(this.btnRecorridoAnchura);
+            this.ribbonPanel4.Items.Add(this.btnRecorridoProfundidad);
             this.ribbonPanel4.Tag = null;
             this.ribbonPanel4.Text = "Recorridos";
             // 
@@ -408,6 +413,54 @@
             this.nuevoVerticeToolStripMenuItem.Text = "Nuevo vertice";
             this.nuevoVerticeToolStripMenuItem.Click += new System.EventHandler(this.nuevoVerticeToolStripMenuItem_Click);
             // 
+            // btnRecorridoAnchura
+            // 
+            this.btnRecorridoAnchura.AltKey = null;
+            this.btnRecorridoAnchura.CheckedGroup = null;
+            this.btnRecorridoAnchura.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
+            this.btnRecorridoAnchura.DropDownArrowSize = new System.Drawing.Size(5, 3);
+            this.btnRecorridoAnchura.DropDownItems.Add(this.ribbonButton4);
+            this.btnRecorridoAnchura.Image = ((System.Drawing.Image)(resources.GetObject("btnRecorridoAnchura.Image")));
+            this.btnRecorridoAnchura.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRecorridoAnchura.SmallImage")));
+            this.btnRecorridoAnchura.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
+            this.btnRecorridoAnchura.Tag = null;
+            this.btnRecorridoAnchura.Text = "Anchura";
+            this.btnRecorridoAnchura.ToolTip = null;
+            this.btnRecorridoAnchura.ToolTipTitle = null;
+            this.btnRecorridoAnchura.Value = null;
+            this.btnRecorridoAnchura.Click += new System.EventHandler(this.btnRecorridoAnchura_Click);
+            // 
+            // ribbonButton4
+            // 
+            this.ribbonButton4.AltKey = null;
+            this.ribbonButton4.CheckedGroup = null;
+            this.ribbonButton4.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
+            this.ribbonButton4.DropDownArrowSize = new System.Drawing.Size(5, 3);
+            this.ribbonButton4.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton4.Image")));
+            this.ribbonButton4.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton4.SmallImage")));
+            this.ribbonButton4.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
+            this.ribbonButton4.Tag = null;
+            this.ribbonButton4.Text = "ribbonButton4";
+            this.ribbonButton4.ToolTip = null;
+            this.ribbonButton4.ToolTipTitle = null;
+            this.ribbonButton4.Value = null;
+            // 
+            // btnRecorridoProfundidad
+            // 
+            this.btnRecorridoProfundidad.AltKey = null;
+            this.btnRecorridoProfundidad.CheckedGroup = null;
+            this.btnRecorridoProfundidad.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
+            this.btnRecorridoProfundidad.DropDownArrowSize = new System.Drawing.Size(5, 3);
+            this.btnRecorridoProfundidad.Image = ((System.Drawing.Image)(resources.GetObject("btnRecorridoProfundidad.Image")));
+            this.btnRecorridoProfundidad.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRecorridoProfundidad.SmallImage")));
+            this.btnRecorridoProfundidad.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
+            this.btnRecorridoProfundidad.Tag = null;
+            this.btnRecorridoProfundidad.Text = "Profundidad";
+            this.btnRecorridoProfundidad.ToolTip = null;
+            this.btnRecorridoProfundidad.ToolTipTitle = null;
+            this.btnRecorridoProfundidad.Value = null;
+            this.btnRecorridoProfundidad.Click += new System.EventHandler(this.btnRecorridoProfundidad_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,6 +506,9 @@
         private System.Windows.Forms.ContextMenuStrip CMSCrearVertice;
         private System.Windows.Forms.ToolStripMenuItem nuevoVerticeToolStripMenuItem;
         private System.Windows.Forms.RibbonPanel ribbonPanel4;
+        private System.Windows.Forms.RibbonButton btnRecorridoAnchura;
+        private System.Windows.Forms.RibbonButton ribbonButton4;
+        private System.Windows.Forms.RibbonButton btnRecorridoProfundidad;
     }
 }
 

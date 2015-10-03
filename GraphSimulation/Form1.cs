@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Printing;
+using System.Threading;
 
 namespace GraphSimulation
 {
@@ -23,6 +24,7 @@ namespace GraphSimulation
         // variables para el control de ventanas modales
         private Vertice ventanaVertice; // ventana para agregar los vértices
         private Arco ventanaArco; // ventana para agregar los arcos
+        private Recorrido ventanaRecorrido; // ventana para seleccionar el nodo inicial del recorrido
 
         public Form1()
         {
@@ -32,6 +34,7 @@ namespace GraphSimulation
             var_control = 0;
             ventanaVertice = new Vertice();
             ventanaArco = new Arco();
+            ventanaRecorrido = new Recorrido();
 
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
@@ -224,6 +227,99 @@ namespace GraphSimulation
         private void nuevoVerticeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnNewNode.PerformClick();
+        }
+
+        private void RecorridoAnchura(CVertice nodo)
+        {
+            CVertice temp = new CVertice();
+            nodo.Visitado = true;
+            nodo.Padre = null;
+            Queue<CVertice> cola = new Queue<CVertice>();
+            cola.Enqueue(nodo);
+            grafo.Colorear(nodo);
+            pbCanvas.Refresh();
+            Thread.Sleep(1000);
+            while (cola.Count != 0)
+            {
+                temp = cola.Dequeue();
+                foreach (CArco arco in temp.ListaAdyacencia)
+                {
+
+                    if (arco.nDestino.Visitado == false)
+                    {
+                        arco.nDestino.Visitado = true;
+                        arco.nDestino.Padre = temp;
+                        grafo.Colorear(arco.nDestino);
+                        pbCanvas.Refresh();
+                        Thread.Sleep(1000);
+                        cola.Enqueue(arco.nDestino);
+                    }
+                }
+            }
+        }
+
+        private void RecorridoProfundidad(CVertice nodo)
+        {
+            CVertice temp = new CVertice();
+            Stack<CVertice> pila = new Stack<CVertice>();
+            pila.Push(nodo);
+            while (pila.Count != 0)
+            {
+                temp = pila.Pop();
+                if (temp.Visitado == false)
+                {
+                    temp.Visitado = true;
+                    grafo.Colorear(temp);
+                    pbCanvas.Refresh();
+                    Thread.Sleep(1000);
+                    foreach (CArco arco in temp.ListaAdyacencia)
+                    {
+                        pila.Push(arco.nDestino);
+                    }
+                }
+            }
+        }
+
+        private void btnRecorridoAnchura_Click(object sender, EventArgs e)
+        {
+            Graphics graficoTemporal = pbCanvas.CreateGraphics();
+            ventanaRecorrido.Visible = false;
+            ventanaRecorrido.control = false;
+            ventanaRecorrido.ShowDialog();
+            if (ventanaRecorrido.control)
+            {
+                if (grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text) != null)
+                {
+                    RecorridoAnchura(grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text));
+                }
+                else
+                {
+                    MessageBox.Show("El Nodo " + ventanaVertice.txtVertice.Text + " No se encuentra en el grafo", "Error Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            grafo.ReestablecerGrafo(graficoTemporal);
+            pbCanvas.Refresh();
+        }
+
+        private void btnRecorridoProfundidad_Click(object sender, EventArgs e)
+        {
+            Graphics graficoTemporal = pbCanvas.CreateGraphics();
+            ventanaRecorrido.Visible = false;
+            ventanaRecorrido.control = false;
+            ventanaRecorrido.ShowDialog();
+            if (ventanaRecorrido.control)
+            {
+                if (grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text) != null)
+                {
+                    RecorridoProfundidad(grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text));
+                }
+                else
+                {
+                    MessageBox.Show("El Nodo " + ventanaVertice.txtVertice.Text + " No se encuentra en el grafo", "Error Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            grafo.ReestablecerGrafo(graficoTemporal);
+            pbCanvas.Refresh();
         }
     }
 }
