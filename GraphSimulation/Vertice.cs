@@ -12,13 +12,15 @@ namespace GraphSimulation
 {
     public partial class Vertice : Form
     {
-        public bool control; // variable de control
+        public bool control;
+        public bool borrar; // variable de control
         public string dato; // el dato que almacenará el vértice
 
         public Vertice()
         {
             InitializeComponent();
             control = false;
+            borrar = true;
             dato = " ";
         }
 
@@ -29,18 +31,20 @@ namespace GraphSimulation
             {
                 MessageBox.Show("Debes ingresar un valor", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
+               
             }
             else
             {
                 control = true;
-                Hide();
+                this.Hide();
             }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             control = false;
-            Hide();
+            borrar = false;
+            this.Hide();
         }
 
         private void Vertice_Load(object sender, EventArgs e)

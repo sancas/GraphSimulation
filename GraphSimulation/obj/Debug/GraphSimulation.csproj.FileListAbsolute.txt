@@ -30,3 +30,44 @@ C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulatio
 C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
 C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
 C:\Users\Sancas\Desktop\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Recorrido.resources
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.exe
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.pdb
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.exe
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.pdb
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Recorrido.resources
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
+C:\Users\jacky\Downloads\proyecto progra 4\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Eliminarcs.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.exe
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.pdb
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.exe
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.pdb
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Eliminarcs.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Recorrido.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
+C:\Users\jacky\Downloads\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.exe
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.pdb
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.exe
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\bin\Debug\GraphSimulation.pdb
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Eliminarcs.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Recorrido.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.NuevoGrafo.resources
+C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.AgregarArcos.resources

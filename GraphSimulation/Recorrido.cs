@@ -33,14 +33,15 @@ namespace GraphSimulation
             else
             {
                 control = true;
-                Hide();
+                //this.Hide();
+                this.Close();
             }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             control = false;
-            Hide();
+            this.Hide();
         }
 
         private void Recorrido_Load(object sender, EventArgs e)
