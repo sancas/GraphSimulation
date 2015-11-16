@@ -13,4 +13,3 @@ J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Release\GraphSimula
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Release\System.Windows.Forms.Ribbon35.dll
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.exe
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.pdb
-J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.csprojResolveAssemblyReference.cache

@@ -43,7 +43,9 @@ namespace GraphSimulation
         private AgregarArcos nuevoArco;
         private bool EsDigrafo;
         private bool loading;
-        private int tiempo; 
+        private bool opening;
+        private int tiempo;
+        private string filePath;
 
         public Form1()
         {
@@ -57,6 +59,7 @@ namespace GraphSimulation
             miGrafo = new NuevoGrafo();
             nuevoArco = new AgregarArcos();
             loading = false;
+            opening = false;
             tiempo = 100;
             recorrido = "";
             VentanaGuardar = new SaveFileDialog();
@@ -64,47 +67,41 @@ namespace GraphSimulation
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
         }
 
-        public void OpenFile(string filePath)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            loading = true; //Se marca la bandera cargando como verdadero
-            SaveAndLoad myLoad = new SaveAndLoad(); //Instancia de objeto SaveAndLoad
-            grafo = myLoad.ReadFromBinaryFile<CGrafo>(filePath); //Convertimos de binario a CGrafo con la clase SaveAndLoad
-            miGrafo.control = true; //Marcamos la varible como true
-            btnNewFile.PerformClick(); //Simulamos un click en el boton NewFile
-            grafo.DibujarGrafo(pbCanvas.CreateGraphics()); //Dibujamos el grafo cargado en el Canvas
-            loading = false; //Ya no esta cargando
+            tamaño = this.Size.Width;
+            ancho = panel1.Width / 2;
+            alto = panel1.Height;
+            btnSaveFile.Enabled = false;
+            btnQuickSaveFile.Enabled = false;
+            btnDelNode.Enabled = false;
+            btnNewNode.Enabled = false;
+            rbnEliminarArista.Enabled = false;
+            rbnRestaurar.Enabled = false;
+            rbnWarshall.Enabled = false;
+            rbnDijk.Enabled = false;
+            btnRecorridoAnchura.Enabled = false;
+            btnRecorridoProfundidad.Enabled = false;
+            rbnBAgregarArista.Enabled = false;
+            rbnBKruskal.Enabled = false;
+            rbnBPrim.Enabled = false;
+            rbnWarshallND.Enabled = false;
+            splitContainer1.Panel2Collapsed = true;
+            lbRecorrido.Text = "";
+            label1.Text = "";
+            label2.Text = "";
+            label4.Text = "";
+            if (opening)
+            {
+                btnLoadFile.PerformClick();
+                opening = false;
+            }
         }
 
-        public void comprobarPermisos()
+        public void OpenFile(string filePath)
         {
-            if (grafo != null)
-            {
-                btnSaveFile.Enabled = true;
-                btnQuickSaveFile.Enabled = true;
-                btnNewNode.Enabled = true;
-                aristas = 0;
-                foreach (CVertice nodo in grafo.nodos)
-                {
-                    foreach (CArco a in nodo.ListaAdyacencia)
-                        aristas++;
-                }
-                if (grafo.nodos.Count != 0) //Si el grafo tiene nodos
-                {
-                    btnDelNode.Enabled = true; //Habilitar el boton borrar nodo
-                    rbnBAgregarArista.Enabled = true; //Habilitar el boton agregar arista
-                    if (aristas != 0) //Si tiene aristas
-                    {
-                        rbnEliminarArista.Enabled = true; //Habilitar el boton eliminar arista
-                        rbnWarshall.Enabled = true; //Habilitar el boton del algoritmo Warshall
-                        rbnDijk.Enabled = true; //Habilitar el boton del algoritmo Dijkstra
-                        rbnBKruskal.Enabled = true; //Habilitar el boton del algoritmo Kruskal
-                        rbnBPrim.Enabled = true; //Habilitar el boton del algoritmo Prim
-                        rbnWarshallND.Enabled = true; //Habilitar el boton del algoritmo Warshall no dirigido
-                        btnRecorridoAnchura.Enabled = true; //Habilitar recorrido anchura
-                        btnRecorridoProfundidad.Enabled = true; //Habilitar recorrido profundidad
-                    }
-                }
-            }
+            opening = true; //Se marca la bandera opening como verdadero
+            this.filePath = filePath; //Se guarda la ruta del archivo
         }
 
         protected void HabilitarControles()
@@ -207,10 +204,18 @@ namespace GraphSimulation
             VentanaCargar.FilterIndex = 2; //Indice del filtro
             VentanaCargar.RestoreDirectory = true; //Volver a abrir donde se cerro
 
-            DialogResult result = VentanaCargar.ShowDialog(); //Mostrar la ventana de carga
+            DialogResult result;
+            if (!opening)
+                result = VentanaCargar.ShowDialog(); //Mostrar la ventana de carga
+            else
+                result = DialogResult.OK;
             if (result == DialogResult.OK) // Si fue satisfactorio
             {
-                string file = VentanaCargar.FileName; //Guardamos la direccion del archivo
+                string file;
+                if (opening)
+                    file = filePath;
+                else
+                    file = VentanaCargar.FileName; //Guardamos la direccion del archivo
                 grafo = myLoad.ReadFromBinaryFile<CGrafo>(file); //Convertimos de binario a CGrafo con la clase SaveAndLoad
                 miGrafo.control = true; //Marcamos la varible como true
                 btnNewFile.PerformClick(); //Simulamos un click en el boton NewFile
@@ -604,7 +609,7 @@ namespace GraphSimulation
 
         private void rbnEliminarArista_Click(object sender, EventArgs e)
         {
-            aristas = 0;                   
+            aristas = 0;
             eliminarnodo = new Eliminarcs(2);
             eliminarnodo.Visible = false;
             eliminarnodo.control = false;
@@ -642,33 +647,6 @@ namespace GraphSimulation
                 rbnBKruskal.Enabled = false;
                 rbnBPrim.Enabled = false;
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            tamaño = this.Size.Width;
-            ancho = panel1.Width / 2;
-            alto = panel1.Height;
-            btnSaveFile.Enabled = false;
-            btnQuickSaveFile.Enabled = false;
-            btnDelNode.Enabled = false;
-            btnNewNode.Enabled = false;
-            rbnEliminarArista.Enabled = false;
-            rbnRestaurar.Enabled = false;
-            rbnWarshall.Enabled = false;
-            rbnDijk.Enabled = false;
-            btnRecorridoAnchura.Enabled = false;
-            btnRecorridoProfundidad.Enabled = false;
-            rbnBAgregarArista.Enabled = false;
-            rbnBKruskal.Enabled = false;
-            rbnBPrim.Enabled = false;
-            rbnWarshallND.Enabled = false;
-            splitContainer1.Panel2Collapsed = true;
-            lbRecorrido.Text = "";
-            label1.Text = "";
-            label2.Text = "";
-            label4.Text = "";
-            comprobarPermisos();
         }
 
         private void rbnWarshall_Click(object sender, EventArgs e)

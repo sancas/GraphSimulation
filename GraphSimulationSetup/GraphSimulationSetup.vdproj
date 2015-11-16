@@ -165,6 +165,11 @@
             "AssemblyAsmDisplayName" = "8:System.Windows.Forms.Ribbon35, Version=3.5.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B89937738CE51839CA149DEAE5AB7921"
+                    {
+                    "Name" = "8:System.Windows.Forms.Ribbon35.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Windows.Forms.Ribbon35.dll"
             "TargetName" = "8:"
@@ -262,9 +267,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:GraphSimulationSetup"
+        "ProductName" = "8:Graph Simulation"
         "ProductCode" = "8:{BB8D8FDC-7884-4246-B08F-BEB09847442B}"
-        "PackageCode" = "8:{E6BEAB09-2581-4177-8E12-BE3F2A72FAE0}"
+        "PackageCode" = "8:{90009E2A-A6E9-460C-A6D4-DB612601F219}"
         "UpgradeCode" = "8:{4D8DE287-4B86-41F6-BA89-58354E379D06}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
