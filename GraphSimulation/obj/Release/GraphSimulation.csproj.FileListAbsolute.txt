@@ -8,4 +8,8 @@ J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimula
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Recorrido.resources
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Vertice.resources
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.csproj.GenerateResource.Cache
-J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.csprojResolveAssemblyReference.cache
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Release\GraphSimulation.exe
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Release\GraphSimulation.pdb
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Release\System.Windows.Forms.Ribbon35.dll
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.exe
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.pdb

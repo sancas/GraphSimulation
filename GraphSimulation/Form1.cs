@@ -66,6 +66,41 @@ namespace GraphSimulation
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
         }
 
+        public void OpenFile(string filePath)
+        {
+            loading = true;
+            aristas = 0;
+            nodos = 0;
+            SaveAndLoad myLoad = new SaveAndLoad();
+            grafo = myLoad.ReadFromBinaryFile<CGrafo>(filePath);
+            miGrafo.control = true;
+            btnNewFile.PerformClick();
+            grafo.DibujarGrafo(pbCanvas.CreateGraphics());
+            numeronodos = grafo.nodos.Count;
+            foreach (CVertice nodo in grafo.nodos)
+            {
+                nodos++;
+                foreach (CArco a in nodo.ListaAdyacencia)
+                    aristas++;
+            }
+            if (nodos != 0)
+            {
+                btnDelNode.Enabled = true;
+                rbnBAgregarArista.Enabled = true;
+                if (aristas != 0)
+                {
+                    rbnEliminarArista.Enabled = true;
+                    rbnWarshall.Enabled = true;
+                    rbnDijk.Enabled = true;
+                    rbnBKruskal.Enabled = true;
+                    rbnBPrim.Enabled = true;
+                    btnRecorridoAnchura.Enabled = true;
+                    btnRecorridoProfundidad.Enabled = true;
+                }
+            }
+            loading = false;
+        }
+
         protected void HabilitarControles()
         {
             rbnEliminarArista.Enabled = true;
@@ -577,7 +612,6 @@ namespace GraphSimulation
 
         private void rbnBKruskal_Click(object sender, EventArgs e)
         {
-            double t = 0;
             splitContainer1.Panel2Collapsed = false;
             splitContainer1.SplitterDistance = (int)(this.Width * 0.75);
             PnSimulador.Refresh();
