@@ -1,0 +1,11 @@
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Release\GraphSimulation.exe.config
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.AgregarArcos.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Arco.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Eliminarcs.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Form1.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.NuevoGrafo.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Properties.Resources.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Recorrido.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.Vertice.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.csproj.GenerateResource.Cache
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Release\GraphSimulation.csprojResolveAssemblyReference.cache

@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ribbon1 = new System.Windows.Forms.Ribbon();
-            this.ribbonOrbMenuItem1 = new System.Windows.Forms.RibbonOrbMenuItem();
-            this.btnClose = new System.Windows.Forms.RibbonOrbOptionButton();
             this.btnQuickNewFile = new System.Windows.Forms.RibbonButton();
             this.btnNewFile = new System.Windows.Forms.RibbonButton();
             this.btnQuickSaveFile = new System.Windows.Forms.RibbonButton();
@@ -101,11 +99,9 @@
             // 
             this.ribbon1.OrbDropDown.BorderRoundness = 8;
             this.ribbon1.OrbDropDown.Location = new System.Drawing.Point(0, 0);
-            this.ribbon1.OrbDropDown.MenuItems.Add(this.ribbonOrbMenuItem1);
             this.ribbon1.OrbDropDown.Name = "";
-            this.ribbon1.OrbDropDown.OptionItems.Add(this.btnClose);
             this.ribbon1.OrbDropDown.RecentItemsCaption = null;
-            this.ribbon1.OrbDropDown.Size = new System.Drawing.Size(527, 116);
+            this.ribbon1.OrbDropDown.Size = new System.Drawing.Size(527, 72);
             this.ribbon1.OrbDropDown.TabIndex = 0;
             this.ribbon1.OrbImage = ((System.Drawing.Image)(resources.GetObject("ribbon1.OrbImage")));
             this.ribbon1.OrbText = null;
@@ -118,7 +114,7 @@
             this.ribbon1.QuickAcessToolbar.Items.Add(this.btnQuickOpenFile);
             this.ribbon1.QuickAcessToolbar.Tag = null;
             this.ribbon1.QuickAcessToolbar.Value = null;
-            this.ribbon1.Size = new System.Drawing.Size(568, 170);
+            this.ribbon1.Size = new System.Drawing.Size(704, 170);
             this.ribbon1.TabIndex = 0;
             this.ribbon1.Tabs.Add(this.rvTInicio);
             this.ribbon1.Tabs.Add(this.rbTGrafo);
@@ -126,35 +122,6 @@
             this.ribbon1.Tabs.Add(this.rbTAlgoritmos);
             this.ribbon1.TabsMargin = new System.Windows.Forms.Padding(12, 26, 20, 0);
             this.ribbon1.TabSpacing = 6;
-            // 
-            // ribbonOrbMenuItem1
-            // 
-            this.ribbonOrbMenuItem1.AltKey = null;
-            this.ribbonOrbMenuItem1.CheckedGroup = null;
-            this.ribbonOrbMenuItem1.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
-            this.ribbonOrbMenuItem1.DropDownArrowSize = new System.Drawing.Size(5, 3);
-            this.ribbonOrbMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("ribbonOrbMenuItem1.Image")));
-            this.ribbonOrbMenuItem1.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbMenuItem1.SmallImage")));
-            this.ribbonOrbMenuItem1.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
-            this.ribbonOrbMenuItem1.Tag = null;
-            this.ribbonOrbMenuItem1.Text = "ribbonOrbMenuItem1";
-            this.ribbonOrbMenuItem1.ToolTip = null;
-            this.ribbonOrbMenuItem1.ToolTipTitle = null;
-            this.ribbonOrbMenuItem1.Value = null;
-            // 
-            // btnClose
-            // 
-            this.btnClose.AltKey = null;
-            this.btnClose.CheckedGroup = null;
-            this.btnClose.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
-            this.btnClose.DropDownArrowSize = new System.Drawing.Size(5, 3);
-            this.btnClose.Image = null;
-            this.btnClose.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
-            this.btnClose.Tag = null;
-            this.btnClose.Text = "Cerrar";
-            this.btnClose.ToolTip = null;
-            this.btnClose.ToolTipTitle = null;
-            this.btnClose.Value = null;
             // 
             // btnQuickNewFile
             // 
@@ -569,7 +536,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 170);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(568, 273);
+            this.panel1.Size = new System.Drawing.Size(704, 273);
             this.panel1.TabIndex = 2;
             // 
             // splitContainer1
@@ -585,8 +552,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.PnSimulador);
-            this.splitContainer1.Size = new System.Drawing.Size(568, 273);
-            this.splitContainer1.SplitterDistance = 306;
+            this.splitContainer1.Size = new System.Drawing.Size(704, 273);
+            this.splitContainer1.SplitterDistance = 407;
             this.splitContainer1.TabIndex = 3;
             // 
             // pbCanvas
@@ -597,7 +564,7 @@
             this.pbCanvas.Enabled = false;
             this.pbCanvas.Location = new System.Drawing.Point(0, 0);
             this.pbCanvas.Name = "pbCanvas";
-            this.pbCanvas.Size = new System.Drawing.Size(306, 273);
+            this.pbCanvas.Size = new System.Drawing.Size(407, 273);
             this.pbCanvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbCanvas.TabIndex = 1;
             this.pbCanvas.TabStop = false;
@@ -619,7 +586,7 @@
             this.PnSimulador.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnSimulador.Location = new System.Drawing.Point(0, 0);
             this.PnSimulador.Name = "PnSimulador";
-            this.PnSimulador.Size = new System.Drawing.Size(258, 273);
+            this.PnSimulador.Size = new System.Drawing.Size(293, 273);
             this.PnSimulador.TabIndex = 2;
             this.PnSimulador.Visible = false;
             // 
@@ -793,7 +760,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 443);
+            this.ClientSize = new System.Drawing.Size(704, 443);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ribbon1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -825,8 +792,6 @@
         private System.Windows.Forms.RibbonButton btnNewFile;
         private System.Windows.Forms.RibbonButton btnSaveFile;
         private System.Windows.Forms.RibbonButton btnPrint;
-        private System.Windows.Forms.RibbonOrbMenuItem ribbonOrbMenuItem1;
-        private System.Windows.Forms.RibbonOrbOptionButton btnClose;
         private System.Windows.Forms.RibbonButton ribbonButton1;
         private System.Windows.Forms.RibbonButton btnQuickNewFile;
         private System.Windows.Forms.Panel panel1;

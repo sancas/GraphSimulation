@@ -71,3 +71,18 @@ C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\G
 C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache
 C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.NuevoGrafo.resources
 C:\Users\Sancas\Downloads\proyecto progra 4\proyecto progra 4\Proyecto fase II\GraphSimulation-master\GraphSimulation\obj\Debug\GraphSimulation.AgregarArcos.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe.config
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.exe
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.pdb
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.pdb
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.AgregarArcos.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Eliminarcs.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Form1.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.NuevoGrafo.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Properties.Resources.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Recorrido.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Vertice.resources
+J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csproj.GenerateResource.Cache

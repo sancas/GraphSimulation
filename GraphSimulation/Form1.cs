@@ -1040,22 +1040,22 @@ namespace GraphSimulation
                 PnSimulador.Controls.Remove(l);
         }
 
-// Algoritmo de Warshall
-        private List<List<int>> matrizFord = new List<List<int>>();
-        private List<List<int>> matrizDistanciaWarshall = new List<List<int>>(); //matriz de distancias
+        // Algoritmo de Warshall
+        private List<List<int>> matrizFord = new List<List<int>>(); // matriz para utilizar algoritmo de ford
+        private List<List<int>> matrizDistanciaWarshall = new List<List<int>>(); //matriz de distancias de cada nodo con cada nodo si existe relacion entre ellos
         private List<List<int>> matrizNodosWarshall = new List<List<int>>(); //matriz de nodos
         private Queue<int> Cola = new Queue<int>(); //cola de nodos
-        private int totalNodos;
-        int[] parent;
-        bool[] visitados;
+        private int totalNodos; //lista de nodos
+        int[] parent; // padre del nodo
+        bool[] visitados;// variable para comprobar los nodos ya visitados
 
-        private void calcularMatricesIniciales()
+        private void calcularMatricesIniciales() // se calculan las matrices iniciales de distancia y de nodos
         {
             matrizDistanciaWarshall = new List<List<int>>();
             matrizFord = new List<List<int>>();
             matrizNodosWarshall = new List<List<int>>();
-            nodosRuta = new List<CVertice>();
-            totalNodos = grafo.nodos.Count;
+            nodosRuta = new List<CVertice>(); //lista de nodos
+            totalNodos = grafo.nodos.Count; //cuenta el numero de nodos en la lista "nodos"
             parent = new int[totalNodos];
             visitados = new bool[totalNodos];
             //calculamos la matriz inicial de distancias
@@ -1081,7 +1081,7 @@ namespace GraphSimulation
                         filaDistancia.Add(distancia);
                     }
                 }
-                matrizDistanciaWarshall.Add(filaDistancia);
+                matrizDistanciaWarshall.Add(filaDistancia);// obtenemos la matriz inicial de distancias
                 matrizFord.Add(filaDistancia);
             }
             //calculamos la matriz inicial de nodos
@@ -1092,11 +1092,11 @@ namespace GraphSimulation
                 {
                     puntosIntermedios.Add(j);
                 }
-                matrizNodosWarshall.Add(puntosIntermedios);
+                matrizNodosWarshall.Add(puntosIntermedios);// obtenemos la matriz inicial de nodos
             }
         }
 
-        private void algoritmoWarshall()
+        private void algoritmoWarshall() //se declara el metodo de warshall
         {
             for (int k = 0; k < totalNodos; k++)
             {
@@ -1131,30 +1131,30 @@ namespace GraphSimulation
                 }
             }
         }
-        
+
         private void obtenerRutaPesoWarshall(string nodoOrigen, string nodoDestino)
         {
             int indexNodoOrigen = 0;
             int indexNodoDestino = 0;
-            for (int i = 0; i < totalNodos; i++)
+            for (int i = 0; i < totalNodos; i++)//para i menor que la cantidad de nodos agregados a la cola
             {
                 if (grafo.nodos[i].Valor == nodoOrigen)
                 {
-                    indexNodoOrigen = i;
+                    indexNodoOrigen = i;// el valor i sera el indice del nodo origen
                 }
                 if (grafo.nodos[i].Valor == nodoDestino)
                 {
-                    indexNodoDestino = i;
+                    indexNodoDestino = i;// el valor j sera el indice del nodo destino
                 }
             }
-            List<int> ruta = new List<int>();
-            ruta.Add(indexNodoOrigen);
-            ruta.Add(indexNodoDestino);
-            obtenerNodosIntermedios(indexNodoOrigen, indexNodoDestino, ruta, 1);
+            List<int> ruta = new List<int>(); // se declara la lista ruta
+            ruta.Add(indexNodoOrigen); // se añade el indice origen
+            ruta.Add(indexNodoDestino);// se añade el indice destino
+            obtenerNodosIntermedios(indexNodoOrigen, indexNodoDestino, ruta, 1); // se obtienen los nodos intermedios
 
-            foreach (int nodo in ruta)
+            foreach (int nodo in ruta) // para cada nodo en ruta
             {
-                nodosRuta.Add(grafo.nodos[nodo]);
+                nodosRuta.Add(grafo.nodos[nodo]);// agregara en nodosRuta cada nodo en la cola nodos del grafo
             }
             //obtenemos el peso de la ruta
             peso = matrizDistanciaWarshall[ruta[0]][ruta[ruta.Count - 1]];
@@ -1168,25 +1168,25 @@ namespace GraphSimulation
             }
         }
 
-        private void obtenerNodosIntermedios(int nodoOrigen, int nodoDestino, List<int> ruta, int indice)
+        private void obtenerNodosIntermedios(int nodoOrigen, int nodoDestino, List<int> ruta, int indice) //metodo para obtener nodos intermedios
         {
-            int intermedio = matrizNodosWarshall[nodoOrigen][nodoDestino];
-            if (intermedio != nodoDestino)
+            int intermedio = matrizNodosWarshall[nodoOrigen][nodoDestino];// la variable intermedio tendra el valor de la matriznodoWarshall con los valores de origen y destino
+            if (intermedio != nodoDestino) //mientras intermedio sea diferente de nodo destino
             {
-                ruta.Insert(indice, intermedio);
-                indice++;
-                obtenerNodosIntermedios(intermedio, nodoDestino, ruta, indice);
+                ruta.Insert(indice, intermedio);// insertara en la lista ruta en el indice indicado
+                indice++; //indice aumenta
+                obtenerNodosIntermedios(intermedio, nodoDestino, ruta, indice); //obtiene nodo intermedio
             }
             else
             {
-                indice--;
+                indice--; // si intermedio y nodoDestino son iguales indice disminuye
                 if (indice - 1 == -1)
                 {
                     return;
                 }
-                nodoOrigen = ruta[indice - 1];
-                nodoDestino = ruta[indice];
-                obtenerNodosIntermedios(nodoOrigen, nodoDestino, ruta, indice);
+                nodoOrigen = ruta[indice - 1]; // nodo origen tendra el valor que tiene la ruta en determinado indice -1.
+                nodoDestino = ruta[indice];  // nodo destino tendra el valor que tiene la ruta en determinado indice
+                obtenerNodosIntermedios(nodoOrigen, nodoDestino, ruta, indice); // obtiene el nodo intermedio 
             }
         }
 

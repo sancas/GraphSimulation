@@ -141,43 +141,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\cross102.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\thin-354_analytics_line_chart_diagram-512.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\thin-354_analytics_line_chart_diagram-5121.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\line_chart-512.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Maps-Polygon-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Maps-Polyline-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Recorrido-Anchura-64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Recorrido-Profundidad-64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\anchura.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\branching_narrative_step1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\relations-512.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\relations-5121.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\thin-354_analytics_line_chart_diagram-5122.png" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
