@@ -67,37 +67,44 @@ namespace GraphSimulation
         public void OpenFile(string filePath)
         {
             loading = true; //Se marca la bandera cargando como verdadero
-            aristas = 0; //El numero de aristas del grafo se resetea
-            nodos = 0; //El numero de nodos del grafo se resetea
             SaveAndLoad myLoad = new SaveAndLoad(); //Instancia de objeto SaveAndLoad
             grafo = myLoad.ReadFromBinaryFile<CGrafo>(filePath); //Convertimos de binario a CGrafo con la clase SaveAndLoad
             miGrafo.control = true; //Marcamos la varible como true
             btnNewFile.PerformClick(); //Simulamos un click en el boton NewFile
             grafo.DibujarGrafo(pbCanvas.CreateGraphics()); //Dibujamos el grafo cargado en el Canvas
-            numeronodos = grafo.nodos.Count; //Actualizamos el numero de nodos
-            foreach (CVertice nodo in grafo.nodos)
+            loading = false; //Ya no esta cargando
+        }
+
+        public void comprobarPermisos()
+        {
+            if (grafo != null)
             {
-                nodos++;
-                foreach (CArco a in nodo.ListaAdyacencia)
-                    aristas++;
-            }
-            if (nodos != 0) //Si el grafo tiene nodos
-            {
-                btnDelNode.Enabled = true; //Habilitar el boton borrar nodo
-                rbnBAgregarArista.Enabled = true; //Habilitar el boton agregar arista
-                if (aristas != 0) //Si tiene aristas
+                btnSaveFile.Enabled = true;
+                btnQuickSaveFile.Enabled = true;
+                btnNewNode.Enabled = true;
+                aristas = 0;
+                foreach (CVertice nodo in grafo.nodos)
                 {
-                    rbnEliminarArista.Enabled = true; //Habilitar el boton eliminar arista
-                    rbnWarshall.Enabled = true; //Habilitar el boton del algoritmo Warshall
-                    rbnDijk.Enabled = true; //Habilitar el boton del algoritmo Dijkstra
-                    rbnBKruskal.Enabled = true; //Habilitar el boton del algoritmo Kruskal
-                    rbnBPrim.Enabled = true; //Habilitar el boton del algoritmo Prim
-                    rbnWarshallND.Enabled = true; //Habilitar el boton del algoritmo Warshall no dirigido
-                    btnRecorridoAnchura.Enabled = true; //Habilitar recorrido anchura
-                    btnRecorridoProfundidad.Enabled = true; //Habilitar recorrido profundidad
+                    foreach (CArco a in nodo.ListaAdyacencia)
+                        aristas++;
+                }
+                if (grafo.nodos.Count != 0) //Si el grafo tiene nodos
+                {
+                    btnDelNode.Enabled = true; //Habilitar el boton borrar nodo
+                    rbnBAgregarArista.Enabled = true; //Habilitar el boton agregar arista
+                    if (aristas != 0) //Si tiene aristas
+                    {
+                        rbnEliminarArista.Enabled = true; //Habilitar el boton eliminar arista
+                        rbnWarshall.Enabled = true; //Habilitar el boton del algoritmo Warshall
+                        rbnDijk.Enabled = true; //Habilitar el boton del algoritmo Dijkstra
+                        rbnBKruskal.Enabled = true; //Habilitar el boton del algoritmo Kruskal
+                        rbnBPrim.Enabled = true; //Habilitar el boton del algoritmo Prim
+                        rbnWarshallND.Enabled = true; //Habilitar el boton del algoritmo Warshall no dirigido
+                        btnRecorridoAnchura.Enabled = true; //Habilitar recorrido anchura
+                        btnRecorridoProfundidad.Enabled = true; //Habilitar recorrido profundidad
+                    }
                 }
             }
-            loading = false; //Ya no se esta cargando
         }
 
         protected void HabilitarControles()
@@ -661,6 +668,7 @@ namespace GraphSimulation
             label1.Text = "";
             label2.Text = "";
             label4.Text = "";
+            comprobarPermisos();
         }
 
         private void rbnWarshall_Click(object sender, EventArgs e)
