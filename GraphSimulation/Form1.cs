@@ -260,6 +260,26 @@ namespace GraphSimulation
             }
         }
 
+        private void txtTime_TextBoxTextChanged(object sender, EventArgs e)
+        {
+            if (txtTime.TextBoxText.Trim() == "")
+                tiempo = 0;
+            else
+            {
+                int.TryParse(txtTime.TextBoxText, out tiempo);
+            }
+        }
+
+        private void txtTime_TextBoxKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
         private void myPrintDocument1_PrintPage(System.Object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Size Tamanho = new Size();
@@ -1213,26 +1233,6 @@ namespace GraphSimulation
             }
         }
 
-        private void txtTime_TextBoxTextChanged(object sender, EventArgs e)
-        {
-            if (txtTime.TextBoxText.Trim() == "")
-                tiempo = 0;
-            else
-            {
-                int.TryParse(txtTime.TextBoxText, out tiempo);
-            }
-        }
-
-        private void txtTime_TextBoxKeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
-            {
-                MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                e.Handled = true;
-                return;
-            }
-        }
-
         private int[,] AlgPrim(CVertice nodoInicial, int[,] Matriz)
         {  //Llega la matriz a la que le vamos a aplicar el algoritmo
             bool[] marcados = new bool[grafo.nodos.Count]; //Creamos un vector booleano, para saber cuales están marcados
@@ -1350,22 +1350,22 @@ namespace GraphSimulation
 
         public int[,] Kruskal()
         {
-            int[,] adyacencia = grafo.FillMatriz();
-            totalNodos = grafo.nodos.Count;
-            int[] p = new int[adyacencia.GetLength(0)];
-            int min, sum = 0, ne = 0, i, j, u = 0, v = 0, a = 0, b = 0;
-            for (i = 0; i < totalNodos; i++)
-                p[i] = 0;
-            while (ne < totalNodos - 1)
+            int[,] adyacencia = grafo.FillMatriz(); //Se crea la matriz de adyacencia
+            totalNodos = grafo.nodos.Count; //Numero de nodos en el grafo
+            int[] p = new int[adyacencia.GetLength(0)]; //Vector P
+            int min, sum = 0, ne = 0, i, j, u = 0, v = 0, a = 0, b = 0; //Variables de control
+            for (i = 0; i < totalNodos; i++) //Marcamos P
+                p[i] = 0; //Con valor inicial de 0
+            while (ne < totalNodos - 1) //Mientras el numero de aristas sea menor que el total de nodos menos 1
             {
-                min = int.MaxValue;
+                min = int.MaxValue; //Min = inf
                 for (i = 0; i < totalNodos; i++)
                 {
                     for(j = 0; j < totalNodos; j++)
                     {
-                        if (adyacencia[i, j] < min && adyacencia[i, j] != -1)
+                        if (adyacencia[i, j] < min && adyacencia[i, j] != -1) //Si el peso de la arista es menor que el minimo
                         {
-                            min = adyacencia[i, j];
+                            min = adyacencia[i, j]; //El minimo pasa a ser el peso de la arista
                             u = a = i;
                             v = b = j;
                         }
@@ -1375,10 +1375,10 @@ namespace GraphSimulation
                     u = p[u];
                 while (p[v] != 0)
                     v = p[v];
-                if (u != v)
+                if (u != v) //Si no se formara un ciclo al crear la arista
                 {
-                    ne++;
-                    sum += min;
+                    ne++; //Aumentamos el numero de aristas
+                    sum += min; //Sumamos el costo minimo a la suma de los costos
                     grafo.Colorear(grafo.nodos[a]);
                     pbCanvas.Refresh();
                     Thread.Sleep(tiempo);
@@ -1389,13 +1389,12 @@ namespace GraphSimulation
                     grafo.Colorear(grafo.nodos[b]);
                     pbCanvas.Refresh();
                     Thread.Sleep(tiempo);
-                    p[v] = u;
+                    p[v] = u; //Guardamos u en p[v]
                 }
-
-                adyacencia[a, b] = adyacencia[b, a] = int.MaxValue;
+                adyacencia[a, b] = adyacencia[b, a] = int.MaxValue; //La arista ahora pasa a ser inf
             }
             label2.Text += "\nCosto minimo: " + sum;
-            return adyacencia;
+            return adyacencia; //Regresamos matriz de adyacencia
         }
 
         /* FIN ALGORITMO DE KRUSKAL */
