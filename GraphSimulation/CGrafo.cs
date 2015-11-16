@@ -14,14 +14,12 @@ namespace GraphSimulation
     {
         public List<CVertice> nodos; // Lista de nodos del grafo
         public List<CVertice> desmarcados;//lista de nodos desmarcados
-        public List<CArco> Aristasdeexpancion;
         public bool DiGrafo;
 
         public CGrafo(bool DiGrafo = true) // Constructor
         {
             nodos = new List<CVertice>();
             desmarcados = new List<CVertice>();
-            Aristasdeexpancion = new List<CArco>();
             this.DiGrafo = DiGrafo;
         }
 
@@ -203,7 +201,18 @@ namespace GraphSimulation
                     }
                 }
             }
+        }
 
+        public void ColorArista(CVertice o, CVertice d)
+        {
+            foreach (CArco a in o.ListaAdyacencia)
+            {
+                if (o.ListaAdyacencia != null && a.nDestino == d)
+                {
+                    a.color = Color.Red;
+                    a.grosor_flecha = 4;
+                }
+            }
         }
 
 

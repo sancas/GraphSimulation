@@ -610,38 +610,6 @@ namespace GraphSimulation
             }
         }
 
-        private void rbnBKruskal_Click(object sender, EventArgs e)
-        {
-            splitContainer1.Panel2Collapsed = false;
-            splitContainer1.SplitterDistance = (int)(this.Width * 0.75);
-            PnSimulador.Refresh();
-            PnSimulador.Visible = true;
-            Duracion.Restart();
-            int [][] miKruskal = Kruskal();
-            Duracion.Stop();
-            LblSimu.Text = "Simulacion: Algortimo de Prim";
-            label2.Text = "Matriz de distancias:\n";
-            for (int i = 0; i < grafo.nodos.Count; i++)
-            {
-                label2.Text += "|";
-                for (int j = 0; j < grafo.nodos.Count; j++)
-                {
-                    int offset_text = 5;
-                    if (j + 1 < grafo.nodos.Count)
-                    {
-                        if (miKruskal[i][j + 1] > 99)
-                            offset_text = 3;
-                        else if (miKruskal[i][j + 1] > 9 || miKruskal[i][j + 1] < 0)
-                            offset_text = 4;
-                    }
-                    else
-                        offset_text = 0;
-                    label2.Text += miKruskal[i][j].ToString().PadRight(offset_text);
-                }
-                label2.Text += " |\n";
-            }
-        }
-
         private void rbnEliminarArista_Click(object sender, EventArgs e)
         {
             aristas = 0;                   
@@ -1227,7 +1195,6 @@ namespace GraphSimulation
         /* ALGORITMO DE PRIM */
         private void rbnBPrim_Click(object sender, EventArgs e)
         {
-            Graphics graficoTemporal = pbCanvas.CreateGraphics();
             ventanaRecorrido.Visible = false;
             ventanaRecorrido.control = false;
             ventanaRecorrido.ShowDialog();
@@ -1287,7 +1254,6 @@ namespace GraphSimulation
                     }
                     miCadenita += "Y la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos";
                     label2.Text += miCadenita;
-                    //grafo.RestablecerGrafo(graficoTemporal);
                 }
                 else
                 {
@@ -1377,54 +1343,88 @@ namespace GraphSimulation
 
         /* ALGORITMO DE KRUSKAL */
 
-        public int[][] Kruskal()
+        private void rbnBKruskal_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = false;
+            splitContainer1.SplitterDistance = (int)(this.Width * 0.75);
+            LblSimu.Text = "Simulacion: Algortimo de Kruskal";
+            label2.Text = "Matriz de distancias:\n";
+            for (int i = 0; i < grafo.nodos.Count; i++)
+            {
+                label2.Text += "|";
+                for (int j = 0; j < grafo.nodos.Count; j++)
+                {
+                    int offset_text = 5;
+                    if (j + 1 < grafo.nodos.Count)
+                    {
+                        if (grafo.FillMatriz()[i, j + 1] > 99)
+                            offset_text = 3;
+                        else if (grafo.FillMatriz()[i, j + 1] > 9 || grafo.FillMatriz()[i, j + 1] < 0)
+                            offset_text = 4;
+                    }
+                    else
+                        offset_text = 0;
+                    label2.Text += grafo.FillMatriz()[i, j].ToString().PadRight(offset_text);
+                }
+                label2.Text += " |\n";
+            }
+            PnSimulador.Visible = true;
+            PnSimulador.Refresh();
+            rbnRestaurar.Enabled = true;
+            Duracion.Start();
+            int[,] miMatriz = Kruskal();
+            Duracion.Stop();
+            label2.Text += "\nY la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos";
+        }
+
+        public int[,] Kruskal()
         {
             int[,] adyacencia = grafo.FillMatriz();
-            int[][] arbol = new int[numeronodos][];
-            int[] pertenece = new int[numeronodos];
-
-            for (int i = 0; i < numeronodos; i++)
+            totalNodos = grafo.nodos.Count;
+            int[] p = new int[adyacencia.GetLength(0)];
+            int min, sum = 0, ne = 0, i, j, u = 0, v = 0, a = 0, b = 0;
+            for (i = 0; i < totalNodos; i++)
+                p[i] = 0;
+            while (ne < totalNodos - 1)
             {
-                arbol[i] = new int[numeronodos];
-                pertenece[i] = i;
-            }
-
-            int nodoA = 0;
-            int nodoB = 0;
-            int arcos = 1;
-            while (arcos < numeronodos)
-            {
-                int min = Int32.MaxValue;
-                for (int i = 0; i < numeronodos; i++)
+                min = int.MaxValue;
+                for (i = 0; i < totalNodos; i++)
                 {
-                    for (int j = 0; j < numeronodos; j++)
+                    for(j = 0; j < totalNodos; j++)
                     {
-                        if (min > adyacencia[i, j] && adyacencia[i, j] != 0 && pertenece[i] != pertenece[j])
+                        if (adyacencia[i, j] < min && adyacencia[i, j] != -1)
                         {
                             min = adyacencia[i, j];
-                            nodoA = i;
-                            nodoB = j;
-                        }
-                        if (pertenece[nodoA] != pertenece[nodoB])
-                        {
-                            arbol[nodoA][nodoB] = min;
-                            arbol[nodoB][nodoA] = min;
-
-                            int temp = pertenece[nodoB];
-                            for (int k = 0; k < numeronodos; k++)
-                            {
-                                if(pertenece[k] == temp)
-                                {
-                                    pertenece[k] = pertenece[nodoA];
-                                }
-                            }
-                            arcos++;
+                            u = a = i;
+                            v = b = j;
                         }
                     }
                 }
-            }
-            return arbol;
+                while (p[u] != 0)
+                    u = p[u];
+                while (p[v] != 0)
+                    v = p[v];
+                if (u != v)
+                {
+                    ne++;
+                    sum += min;
+                    grafo.Colorear(grafo.nodos[a]);
+                    pbCanvas.Refresh();
+                    Thread.Sleep(100);
+                    grafo.ColoArista(grafo.nodos[a].Valor.ToString(), grafo.nodos[b].ToString());
+                    grafo.ColoArista(grafo.nodos[b].ToString(), grafo.nodos[a].ToString());
+                    pbCanvas.Refresh();
+                    Thread.Sleep(100);
+                    grafo.Colorear(grafo.nodos[b]);
+                    pbCanvas.Refresh();
+                    Thread.Sleep(1000);
+                    p[v] = u;
+                }
 
+                adyacencia[a, b] = adyacencia[b, a] = int.MaxValue;
+            }
+            label2.Text += "\nCosto minimo: " + sum;
+            return adyacencia;
         }
 
         /* FIN ALGORITMO DE KRUSKAL */
