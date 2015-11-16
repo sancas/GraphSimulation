@@ -27,25 +27,23 @@ namespace GraphSimulation
         private Arco ventanaArco; // ventana para agregar los arcos
         private Recorrido ventanaRecorrido; // ventana para seleccionar el nodo inicial del recorrido
         private string recorrido;//variable que guarda el recorrido que se realizo 
-        private Stopwatch Duracion;
-        private Eliminarcs eliminarnodo;
-        private SaveFileDialog VentanaGuardar;
-        private OpenFileDialog VentanaCargar;
-        private int tamaño, aristas = 0, nodos = 0;
-        private double ancho, alto;
-        private Label[] r;
-        private int numeronodos = 0, opc;
-        private Label[] arreglo, arreglo2;
+        private Stopwatch Duracion; // variable tipo Stopwatch para determinar el tiempo de los algoritmos
+        private Eliminarcs eliminarnodo; //Ventana Eliminarcs para varios usos con los algoritmos y recorridos
+        private SaveFileDialog VentanaGuardar; //Ventana para seleccionar donde guardar el grafo
+        private OpenFileDialog VentanaCargar; //Ventana para seleccionar el grafo a cargar
+        private int aristas = 0, nodos = 0; //Enteros para almacenar cantidad de nodos y aristas en el grafo
+        private int numeronodos = 0, opc; //Enteros para definir las diferentes opciones y el numero de nodos
+        private Label[] arreglo, arreglo2; //Arreglos de Label se usan para la simulacion de la cola, pila y vector
         private List<CVertice> nodosRuta; // Lista de nodos utilizada para almacenar la ruta
-        private bool buscarRuta = false;
-        private double peso = 0.0;
-        private NuevoGrafo miGrafo;
-        private AgregarArcos nuevoArco;
-        private bool EsDigrafo;
-        private bool loading;
-        private bool opening;
-        private int tiempo;
-        private string filePath;
+        private bool buscarRuta = false; //Auxiliar para el algoritmo de Warshall
+        private double peso = 0.0; //Peso minimo para Warshall
+        private NuevoGrafo miGrafo; //ventana para crear un nuevo grafo
+        private AgregarArcos nuevoArco; //ventana para agregar nuevas aristas
+        private bool EsDigrafo; //Booleano para saber si el grafo es digrafo o no
+        private bool loading; //Si se esta cargando un archivo
+        private bool opening; //Si se esta abriendo un archivo
+        private int tiempo; //Tiempo para la simulacion
+        private string filePath; //Direccion del archivo a cargar
 
         public Form1()
         {
@@ -69,9 +67,6 @@ namespace GraphSimulation
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            tamaño = this.Size.Width;
-            ancho = panel1.Width / 2;
-            alto = panel1.Height;
             btnSaveFile.Enabled = false;
             btnQuickSaveFile.Enabled = false;
             btnDelNode.Enabled = false;
@@ -91,10 +86,10 @@ namespace GraphSimulation
             label1.Text = "";
             label2.Text = "";
             label4.Text = "";
-            if (opening)
+            if (opening) //Si se esta abriendo desde archivo
             {
-                btnLoadFile.PerformClick();
-                opening = false;
+                btnLoadFile.PerformClick(); //Simular un click al boton cargar archivo
+                opening = false; //Abriendo regresa a ser falso
             }
         }
 
@@ -104,7 +99,7 @@ namespace GraphSimulation
             this.filePath = filePath; //Se guarda la ruta del archivo
         }
 
-        protected void HabilitarControles()
+        protected void HabilitarControles() //Habilitar controles comunes
         {
             rbnEliminarArista.Enabled = true;
             rbnWarshall.Enabled = true;
@@ -117,7 +112,7 @@ namespace GraphSimulation
             rbnBAgregarArista.Enabled = true;
         }
 
-        protected void DesHabilitarControles()
+        protected void DesHabilitarControles() //Deshabilitar controles comunes
         {
             rbnEliminarArista.Enabled = false;
             rbnWarshall.Enabled = false;
@@ -249,29 +244,43 @@ namespace GraphSimulation
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            System.Drawing.Printing.PrintDocument myPrintDocument1 = new System.Drawing.Printing.PrintDocument();
-            PrintDialog myPrinDialog1 = new PrintDialog();
-            myPrintDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(myPrintDocument1_PrintPage);
-            myPrinDialog1.Document = myPrintDocument1;
+            System.Drawing.Printing.PrintDocument myPrintDocument1 = new System.Drawing.Printing.PrintDocument(); //Se crea un nuevo documento de impresion
+            PrintDialog myPrinDialog1 = new PrintDialog(); //Se crea un dialogo para la impresion
+            myPrintDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(myPrintDocument1_PrintPage); //Se agrega el evento printpage al documento creado
+            myPrinDialog1.Document = myPrintDocument1; //El documento a trabajar con el dialogo es el anterior
 
-            if (myPrinDialog1.ShowDialog() == DialogResult.OK)
+            if (myPrinDialog1.ShowDialog() == DialogResult.OK) //Si todo salio bien
             {
-                myPrintDocument1.Print();
+                myPrintDocument1.Print(); //Imprimir el documento
             }
+        }
+
+        private void myPrintDocument1_PrintPage(System.Object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Size Tamanho = new Size(); //Tamaño es igual a un nuevo Size
+            Bitmap myBitmap1 = new Bitmap(pbCanvas.Width, pbCanvas.Height); //Creamos un bitmap con las dimensiones del canvas
+            pbCanvas.DrawToBitmap(myBitmap1, new Rectangle(0, 0, pbCanvas.Width, pbCanvas.Height)); //Dibujamos hacia el bitmap creado con las proporciones del canvas
+            Tamanho = new Size(myBitmap1.Width, myBitmap1.Height); //El tamaño es igual al tamaño del bitmap
+            while (Tamanho.Width > 600 || Tamanho.Height > 900) //Mientras el tamaño sobrepasa el de una hoja A4
+                Tamanho = new Size(Tamanho.Width / 2, Tamanho.Height / 2); //Se reduce el tamaño a la mitad
+            myBitmap1 = ResizeBitmap(myBitmap1, Tamanho.Width, Tamanho.Height); //Se actualiza el tamaño del bitmap al nuevo que quepa en una hoja A4
+            e.Graphics.DrawImage(myBitmap1, 0, 0); //Dibujar el graphic en el bitmap;
+            myBitmap1.Dispose(); //Se destruye el objeto
         }
 
         private void txtTime_TextBoxTextChanged(object sender, EventArgs e)
         {
-            if (txtTime.TextBoxText.Trim() == "")
-                tiempo = 0;
-            else
+            if (txtTime.TextBoxText.Trim() == "") //Si no hay texto
+                tiempo = 0; //No hay simulacion
+            else //Sino
             {
-                int.TryParse(txtTime.TextBoxText, out tiempo);
+                int.TryParse(txtTime.TextBoxText, out tiempo); //Intentar conventir a entero y guardar en tiempo
             }
         }
 
         private void txtTime_TextBoxKeyPress(object sender, KeyPressEventArgs e)
         {
+            //Solo permitir numeros
             if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
             {
                 MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -280,28 +289,15 @@ namespace GraphSimulation
             }
         }
 
-        private void myPrintDocument1_PrintPage(System.Object sender, System.Drawing.Printing.PrintPageEventArgs e)
-        {
-            Size Tamanho = new Size();
-            Bitmap myBitmap1 = new Bitmap(pbCanvas.Width, pbCanvas.Height);
-            pbCanvas.DrawToBitmap(myBitmap1, new Rectangle(0, 0, pbCanvas.Width, pbCanvas.Height));
-            Tamanho = new Size(myBitmap1.Width, myBitmap1.Height);
-            while (Tamanho.Width > 600 || Tamanho.Height > 900)
-                Tamanho = new Size(Tamanho.Width / 2, Tamanho.Height / 2);
-            myBitmap1 = ResizeBitmap(myBitmap1, Tamanho.Width, Tamanho.Height);
-            e.Graphics.DrawImage(myBitmap1, 0, 0);
-            myBitmap1.Dispose();
-        }
-
         private Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
         {
-            Bitmap result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
+            Bitmap result = new Bitmap(width, height); //Creamos otro bitmap resultado con las nuevas dimensiones
+            using (Graphics g = Graphics.FromImage(result)) //Se crea un graphic a partir de una imagen
             {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                g.DrawImage(sourceBMP, 0, 0, width, height);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor; //Asignamos el modo de interpolacion
+                g.DrawImage(sourceBMP, 0, 0, width, height); //Se dibuja el bitmap con el nuevo tamaño
             }
-            return result;
+            return result; //Se regresa el bitmap redimensionado
         }
 
         private void btnNewNode_Click(object sender, EventArgs e)
@@ -314,19 +310,19 @@ namespace GraphSimulation
 
         private void btnDelNode_Click(object sender, EventArgs e)
         {
-            eliminarnodo = new Eliminarcs(1);
-            eliminarnodo.Visible = false;
-            eliminarnodo.control = false;
-            eliminarnodo.ShowDialog();
+            eliminarnodo = new Eliminarcs(1); //eliminarnodo crea una ventana Eliminarcs con el valor de 1
+            eliminarnodo.Visible = false; //Se actualiza el dato Visible
+            eliminarnodo.control = false; //Se asigna false a control antes de mostrar el form
+            eliminarnodo.ShowDialog(); //Muestra el dialogo para eliminar un nodo
             if (eliminarnodo.control)
             {
-                if (grafo.BuscarVertice(eliminarnodo.txteliminar.Text.Trim()) != null)
+                if (grafo.BuscarVertice(eliminarnodo.txteliminar.Text.Trim()) != null) //si se encuentra el nodo
                 {
-                    grafo.ELiminarNodo(eliminarnodo.txteliminar.Text.Trim());
-                    grafo.RestablecerGrafo(pbCanvas.CreateGraphics());
-                    pbCanvas.Refresh();
+                    grafo.ELiminarNodo(eliminarnodo.txteliminar.Text.Trim()); //Elimina un nodo con tener el valor string de este
+                    grafo.RestablecerGrafo(pbCanvas.CreateGraphics()); //Se reestablece el grafo y se redibuja para quitar el nodo
+                    pbCanvas.Refresh(); //Se refresca el canvas
                 }
-                else
+                else //si no
                 {
                     MessageBox.Show("El nodo No se encuentra en el grafo",
                    "Error Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -352,46 +348,46 @@ namespace GraphSimulation
         {
             try
             {
-                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-                grafo.DibujarGrafo(e.Graphics);
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality; //Seleccionamos el modo Smoothing
+                grafo.DibujarGrafo(e.Graphics); //Dibujamos el grafo desde el metodo de la clase CGrafo enviando el Graphics
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message); //Se muestra el error si da error
             }
         }
 
         private void pbCanvas_MouseLeave(object sender, EventArgs e)
         {
-            pbCanvas.Refresh();
-            this.Cursor = Cursors.Default;
+            pbCanvas.Refresh(); //Refrescar el canvas cuando se deja el canvas
+            this.Cursor = Cursors.Default; //Se cambia el cursos a default
         }
 
         private void rbnBAgregarArista_Click(object sender, EventArgs e)
         {
-            List<string> miLista = new List<string>();
+            List<string> miLista = new List<string>(); //Se crea una lista de tipo string
             foreach(CVertice cv in grafo.nodos)
             {
-                miLista.Add(cv.Valor.ToString());
+                miLista.Add(cv.Valor.ToString()); //Se agregan los valores de los vertices
             }
-            nuevoArco.Refresh(miLista);
-            nuevoArco.ShowDialog();
-            if (nuevoArco.control)
+            nuevoArco.Refresh(miLista); //Se actualizan los datos en la ventanan Nuevo arco
+            nuevoArco.ShowDialog(); //Se muestra la ventana nuevo Arco
+            if (nuevoArco.control) //Si todo fue bien
             {
-                NodoOrigen = grafo.BuscarVertice(nuevoArco.cmbNodoInicial.Text);
-                NodoDestino = grafo.BuscarVertice(nuevoArco.cmbNodoFinal.Text);
+                NodoOrigen = grafo.BuscarVertice(nuevoArco.cmbNodoInicial.Text); //Nodo origen es igual al seleccionado
+                NodoDestino = grafo.BuscarVertice(nuevoArco.cmbNodoFinal.Text); //Nodo destino es igual al seleccionado
                 if (grafo.AgregarArco(NodoOrigen, NodoDestino)) //Se procede a crear la arista
                 {
-                    int distancia = int.Parse(nuevoArco.txtValor.Text);
-                    NodoOrigen.ListaAdyacencia.Find(v => v.nDestino == NodoDestino).peso = distancia;
-                    if (!EsDigrafo)
-                        NodoDestino.ListaAdyacencia.Find(v => v.nDestino == NodoOrigen).peso = distancia;
-                    HabilitarControles();
+                    int distancia = int.Parse(nuevoArco.txtValor.Text); //Se guarda el peso de la arista
+                    NodoOrigen.ListaAdyacencia.Find(v => v.nDestino == NodoDestino).peso = distancia; //Se busca la arista recien creada y se le asigna el peso anterior
+                    if (!EsDigrafo) //Si no es digrafo
+                        NodoDestino.ListaAdyacencia.Find(v => v.nDestino == NodoOrigen).peso = distancia; //Se asigna el peso a ambos lados
+                    HabilitarControles(); //Se habilitan los controles comunes
                 }
             }
-            NodoOrigen = null;
-            NodoDestino = null;
-            pbCanvas.Refresh();
+            NodoOrigen = null; //NodoOrigen se setea con null
+            NodoDestino = null; //NodoDestino se setea con null
+            pbCanvas.Refresh(); //Se refresca el Canvas
         }
 
         private void pbCanvas_MouseUp(object sender, MouseEventArgs e)
@@ -399,30 +395,29 @@ namespace GraphSimulation
             switch (var_control)
             {
                 case 1: // Dibujando arco
-                    this.Cursor = Cursors.Cross;
-                    ventanaArco.Visible = false;
-                    ventanaArco.control = false;
-                    if ((NodoDestino = grafo.DetectarPunto(e.Location)) != null && NodoOrigen != NodoDestino)
+                    this.Cursor = Cursors.Cross; //Se cambia el cursos a una cruz
+                    ventanaArco.Visible = false; //Se actualiza el dato Visible
+                    ventanaArco.control = false; //Se setea la variable de control por defecto false
+                    if ((NodoDestino = grafo.DetectarPunto(e.Location)) != null && NodoOrigen != NodoDestino) //Si el nodoDestino esta donde se encuentra el mouse y el nodo origen es distinto del nodo destino
                     {
-                        ventanaArco.ShowDialog();
-                        if (ventanaArco.control)
+                        ventanaArco.ShowDialog(); //Se muestra la ventana para crear un nuevo arco
+                        if (ventanaArco.control) //Si todo fue bien
                         {
                             if (grafo.AgregarArco(NodoOrigen, NodoDestino)) //Se procede a crear la arista
                             {
-                                int distancia = int.Parse(ventanaArco.txtArco.Text); ;
-                                NodoOrigen.ListaAdyacencia.Find(v => v.nDestino == NodoDestino).peso = distancia;
-                                if (!EsDigrafo)
-                                    NodoDestino.ListaAdyacencia.Find(v => v.nDestino == NodoOrigen).peso = distancia;
-                                HabilitarControles();
+                                int distancia = int.Parse(ventanaArco.txtArco.Text); //Se guarda el peso de la arista
+                                NodoOrigen.ListaAdyacencia.Find(v => v.nDestino == NodoDestino).peso = distancia; //Se busca la arista recien creada y se le aisigna el peso anterior
+                                if (!EsDigrafo) //Si no es digrafo
+                                    NodoDestino.ListaAdyacencia.Find(v => v.nDestino == NodoOrigen).peso = distancia; //Se asigna el peso a ambos lados
+                                HabilitarControles(); //Se habilitan los controles comunes
                             }
                         }
                         
                     }
-                   
-                    var_control = 0;
-                    NodoOrigen = null;
-                    NodoDestino = null;
-                    pbCanvas.Refresh();
+                    var_control = 0; //Origen set = 0
+                    NodoOrigen = null; //NodoORigen se setea con null
+                    NodoDestino = null; //NodoDestino se setea con nodo null
+                    pbCanvas.Refresh(); //Se refresca el canvas
                     break;
             }
         }
@@ -432,33 +427,33 @@ namespace GraphSimulation
             switch (var_control)
             {
                 case 2: //Creando nuevo nodo
-                    if (nuevoNodo != null)
-                    {
-                        int posX = e.Location.X;
-                        int posY = e.Location.Y;
-                        if (posX < nuevoNodo.Dimensiones.Width / 2)
-                            posX = nuevoNodo.Dimensiones.Width / 2;
-                        else if (posX > pbCanvas.Size.Width - nuevoNodo.Dimensiones.Width / 2)
-                            posX = pbCanvas.Size.Width - nuevoNodo.Dimensiones.Width / 2;
-                        if (posY < nuevoNodo.Dimensiones.Height / 2)
-                            posY = nuevoNodo.Dimensiones.Height / 2;
-                        else if (posY > pbCanvas.Size.Height - nuevoNodo.Dimensiones.Width / 2)
-                            posY = pbCanvas.Size.Height - nuevoNodo.Dimensiones.Width / 2;
-                        nuevoNodo.Posicion = new Point(posX, posY);
-                        pbCanvas.Refresh();
-                        nuevoNodo.DibujarVertice(pbCanvas.CreateGraphics());
+                    if (nuevoNodo != null) //Si el nuevoNodo no es nulo
+                    { 
+                        int posX = e.Location.X; //PosX es igual a la posicion x del mouse
+                        int posY = e.Location.Y; //PosY es igual a la posicion y del mouse
+                        if (posX < nuevoNodo.Dimensiones.Width / 2) //Si la posicion en x es menor que las dimensiones del nuevonodo
+                            posX = nuevoNodo.Dimensiones.Width / 2; //La nueva posicionX es la anchura del form entre 2
+                        else if (posX > pbCanvas.Size.Width - nuevoNodo.Dimensiones.Width / 2) //Sino Si la posicionX es mayor que tamaño del cambas menos el de las nuevas dimensiones
+                            posX = pbCanvas.Size.Width - nuevoNodo.Dimensiones.Width / 2; //La nueva posicionX es igual a el tamaño del canvas menos las dimensiones del nodo entre dos
+                        if (posY < nuevoNodo.Dimensiones.Height / 2) //Si la posicion en Y es menor que las dimensiones height del nodo
+                            posY = nuevoNodo.Dimensiones.Height / 2; //La nueva posicion Y es igual a las dimensiones height del nodo entre dos
+                        else if (posY > pbCanvas.Size.Height - nuevoNodo.Dimensiones.Width / 2) //Sino si la posicionY es mayor que tamaño height del canvas menos la dimension width del nodo entre 2
+                            posY = pbCanvas.Size.Height - nuevoNodo.Dimensiones.Width / 2; //La nueva posicionY es igual al tamaño height del cambas menos la dimension width del nodo entre dos
+                        nuevoNodo.Posicion = new Point(posX, posY); //La posicion del nuevo nodo es igual a un punto (posicionX, posicionY)
+                        pbCanvas.Refresh(); //Se refresca el canvas
+                        nuevoNodo.DibujarVertice(pbCanvas.CreateGraphics()); //Se dibuja el nuevo vertice
                     }
                     break;
                 case 1: // Dibujar arco
-                    this.Cursor = Cursors.Cross;
-                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(4, 4, true);
-                    bigArrow.BaseCap = System.Drawing.Drawing2D.LineCap.Triangle;
-                    pbCanvas.Refresh();
-                    pbCanvas.CreateGraphics().DrawLine(new Pen(Brushes.Black, 2)
+                    this.Cursor = Cursors.Cross; //Se cambia el cursor a una cruz
+                    AdjustableArrowCap bigArrow = new AdjustableArrowCap(4, 4, true); //Crear una flecha
+                    bigArrow.BaseCap = System.Drawing.Drawing2D.LineCap.Triangle; //Triangular
+                    pbCanvas.Refresh(); //Refrescar en c#
+                    pbCanvas.CreateGraphics().DrawLine(new Pen(Brushes.Black, 2) //Crear la linea
                     {
-                        CustomEndCap = bigArrow
+                        CustomEndCap = bigArrow //Con punta rectangular
                     },
-                        NodoOrigen.Posicion, e.Location);
+                        NodoOrigen.Posicion, e.Location); //La posicion del nodoOrigen
                     //this.Cursor = Cursors.Default;
                     break;
             }
@@ -474,51 +469,50 @@ namespace GraphSimulation
                     var_control = 1; // recordemos que es usado para indicar el estado en la pizarra:
                     // 0 -> sin accion, 1 -> Dibujando arco, 2 -> Nuevo vértice
                 }
-                if (nuevoNodo != null && NodoOrigen == null)
+                if (nuevoNodo != null && NodoOrigen == null) //Si hay un nodo origen pero no hay nuevonodo
                 {
-                    ventanaVertice.Visible = false;
-                    ventanaVertice.control = false;
-                    grafo.AgregarVertice(nuevoNodo);
-                    btnDelNode.Enabled = true;
-                    rbnBAgregarArista.Enabled = true;
+                    ventanaVertice.Visible = false; //Se marca la propiedad Visible de la venta Vertica como false
+                    ventanaVertice.control = false; //La variable de control se inicializa con false
+                    grafo.AgregarVertice(nuevoNodo); //Se agrega un nuevo nodo al grafo
+                    btnDelNode.Enabled = true; //Se habilita el boton eliminar nodo
+                    rbnBAgregarArista.Enabled = true; //Se haabilita el boton agregar arista
                     numeronodos = grafo.nodos.Count;//cuenta cuantos nodos hay en el grafo      
-                    ventanaVertice.ShowDialog();
-                    if (ventanaVertice.control)
+                    ventanaVertice.ShowDialog(); //Se muestra la ventana nuevo nodo
+                    if (ventanaVertice.control) //Si todo fue bien
                     {
-                        if (grafo.BuscarVertice(ventanaVertice.txtVertice.Text) == null)
+                        if (grafo.BuscarVertice(ventanaVertice.txtVertice.Text) == null) //Si un nodo con el mismo valor no existe en el grafo
                         {
-                            nuevoNodo.Valor = ventanaVertice.txtVertice.Text;
+                            nuevoNodo.Valor = ventanaVertice.txtVertice.Text; //Se agrega el nuevo valor nuevo nodo
                         }
-                        else
+                        else //sino Error
                         {
                             MessageBox.Show("El Nodo " + ventanaVertice.txtVertice.Text + " ya existe en el grafo ", "Error nuevo Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             grafo.ELiminarNodo("");
                         }
                     }
-                    else
+                    else //Si no fue bien
                     {
-                        grafo.ELiminarNodo(ventanaArco.txtArco.Text);
-                        grafo.RestablecerGrafo(pbCanvas.CreateGraphics());
-                        pbCanvas.Refresh();
-                        
+                        grafo.ELiminarNodo(ventanaArco.txtArco.Text);  //Se elimina el nodo recien creado
+                        grafo.RestablecerGrafo(pbCanvas.CreateGraphics()); //Se reestablece el grafo
+                        pbCanvas.Refresh(); //Se refresca el canvas
                     }
-                    var_control = 0;
-                    nuevoNodo = null;
-                    this.Cursor = Cursors.Default;
-                    pbCanvas.Refresh();
+                    var_control = 0; //variable de control con valor 0
+                    nuevoNodo = null; //nuevoNodo se setea con null
+                    this.Cursor = Cursors.Default; //Se cambia el cursor al default
+                    pbCanvas.Refresh(); //Se refresca el canvas
                 }
             }
             if (e.Button == System.Windows.Forms.MouseButtons.Right) // Si se ha presionado el botón
             // derecho del mouse
             {
-                if (var_control == 0)
+                if (var_control == 0) //Si la variable de control es 0
                 {
                     if ((NodoOrigen = grafo.DetectarPunto(e.Location)) != null)
                     {
                         CMSCrearVertice.Text = "Nodo " + NodoOrigen.Valor;
                     }
                     else
-                        pbCanvas.ContextMenuStrip = this.CMSCrearVertice;
+                        pbCanvas.ContextMenuStrip = this.CMSCrearVertice; //Se abre el menu strip cmscrear vertice
                 }
             }
         }//agrega nodo
@@ -530,71 +524,69 @@ namespace GraphSimulation
 
         private void btnRecorridoAnchura_Click(object sender, EventArgs e)
         {
-            Graphics graficoTemporal = pbCanvas.CreateGraphics();
-            ventanaRecorrido.Visible = false;
-            ventanaRecorrido.control = false;
-            ventanaRecorrido.ShowDialog();
-            if (ventanaRecorrido.control)
+            Graphics graficoTemporal = pbCanvas.CreateGraphics(); //Se guarda el graphic en una variable temporal
+            ventanaRecorrido.Visible = false; //Se define el visible de la ventana recorrido como false
+            ventanaRecorrido.control = false; //Se define la variable de control de la ventana recorrido como false
+            ventanaRecorrido.ShowDialog(); //Se muestra la ventana Recorrido
+            if (ventanaRecorrido.control) //Si todo fue bien
             {
-                if (grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text) != null)
+                if (grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text) != null) //Si el grafo seleccionado se encuentra
                 {
-                    splitContainer1.Panel2Collapsed = false;
-                    splitContainer1.SplitterDistance = (int)(this.Width * 0.75);
-                    PnSimulador.Refresh();
-                    PnSimulador.Visible = true;
-                    double t = 0;
-                    recorrido = "";
-                    r = new Label[grafo.nodos.Count];
-                    Duracion.Start();
-                    RecorridoAnchura(grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text));
-                    Duracion.Stop();
-                    t = Duracion.ElapsedMilliseconds / 1000;
-                    label4.Text = "El tiempo recorrido es de: " + t.ToString() + "seg";  
-                    MessageBox.Show("El recorrido por anchura fue: " +  recorrido + "\n Y la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos");
-                    Duracion.Reset();
+                    splitContainer1.Panel2Collapsed = false; //Decoplar el panel2 del splitcontainer
+                    splitContainer1.SplitterDistance = (int)(this.Width * 0.75); //Asiganar una distancia equivalente a la ventana
+                    PnSimulador.Refresh(); //Refrescar el simulador
+                    PnSimulador.Visible = true; //Hacer visible el panel simulador
+                    double t = 0; //Variable t para el tiempo
+                    recorrido = ""; //String recorrido que almacena el recorrido del los nodos
+                    Duracion.Start(); //Se comienza a contar
+                    RecorridoAnchura(grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text)); //Se hace el recorrido en anchura
+                    Duracion.Stop(); //Se detiene el tiempo :O
+                    t = Duracion.ElapsedMilliseconds / 1000; //El tiempo es lo que duro en milisegundos sobre 1000 o sea en segundos
+                    label4.Text = "El tiempo recorrido es de: " + t.ToString() + "seg"; //Se muestra el valor de tiempo
+                    MessageBox.Show("El recorrido por anchura fue: " +  recorrido + "\n Y la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos"); //Los datos del recorrido
+                    Duracion.Reset(); //Se resetea el cronometro
                 }
-                else
+                else //Sino Error
                 {
                     MessageBox.Show("Ese Nodo no se encuentra en el grafo", "Error Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-            Thread.Sleep(tiempo);
-            grafo.RestablecerGrafo(graficoTemporal);
-            pbCanvas.Refresh();
+            Thread.Sleep(tiempo); //Dormir un rato
+            grafo.RestablecerGrafo(graficoTemporal); //Reestablecer grafo
+            pbCanvas.Refresh(); //Refrescar canvas
         }
 
         private void btnRecorridoProfundidad_Click(object sender, EventArgs e)
         {
-            Graphics graficoTemporal = pbCanvas.CreateGraphics();
-            ventanaRecorrido.Visible = false;
-            ventanaRecorrido.control = false;
-            ventanaRecorrido.ShowDialog();
-            if (ventanaRecorrido.control)
+            Graphics graficoTemporal = pbCanvas.CreateGraphics(); //Se guarda el graphic en una variable temporal
+            ventanaRecorrido.Visible = false; //Se define el visible de la ventana recorrido como false
+            ventanaRecorrido.control = false; //Se define la variable de control de la ventana recorrido como false
+            ventanaRecorrido.ShowDialog(); //Se muestra la ventana Recorrido
+            if (ventanaRecorrido.control) //Si todo fue bien
             {
-                if (grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text) != null)
+                if (grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text) != null) //Si el grafo seleccionado se encuentra
                 {
-                    splitContainer1.Panel2Collapsed = false;
-                    splitContainer1.SplitterDistance = (int)(this.Width * 0.75);
-                    PnSimulador.Refresh();
-                    PnSimulador.Visible = true;
-                    double t = 0;
-                    recorrido = "";
-                    Duracion.Start();
+                    splitContainer1.Panel2Collapsed = false; //Decoplar el panel2 del splitcontainer
+                    splitContainer1.SplitterDistance = (int)(this.Width * 0.75); //Asiganar una distancia equivalente a la ventana
+                    PnSimulador.Refresh(); //Refrescar el simulador
+                    PnSimulador.Visible = true; //Hacer visible el panel simulador
+                    double t = 0; //Variable t para el tiempo
+                    recorrido = ""; //String recorrido que almacena el recorrido del los nodos
+                    Duracion.Start(); //Se comienza a contar
                     RecorridoProfundidad(grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text));
-                    Duracion.Stop();
-                    limpiar(Pila);
-                    t = Duracion.ElapsedMilliseconds / 1000;
-                    label4.Text = "El tiempo recorrido es de: "+t.ToString()+"seg";                   
-                    MessageBox.Show("El recorrido por profundidad fue: " + recorrido + "\n Y la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos");
-                    Duracion.Reset();
+                    Duracion.Stop(); //Se detiene el tiempo :O
+                    t = Duracion.ElapsedMilliseconds / 1000; //El tiempo es lo que duro en milisegundos sobre 1000 o sea en segundos
+                    label4.Text = "El tiempo recorrido es de: " + t.ToString() + "seg"; //Se muestra el valor de tiempo               
+                    MessageBox.Show("El recorrido por profundidad fue: " + recorrido + "\n Y la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos"); //Los datos del recorrido
+                    Duracion.Reset(); //Se resetea el cronometro
                 }
-                else
+                else //Sino error
                 {
                     MessageBox.Show("Ese Nodo no se encuentra en el grafo", "Error Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-            grafo.RestablecerGrafo(graficoTemporal);
-            pbCanvas.Refresh();
+            grafo.RestablecerGrafo(graficoTemporal); //Se reestablece el grafo
+            pbCanvas.Refresh(); //Se refresca el canvas
         }
 
         private void rbnDijk_Click(object sender, EventArgs e)
@@ -743,7 +735,7 @@ namespace GraphSimulation
         /*****************************************************************************/
         /*                                 ALGORITMOS                                */
         /*****************************************************************************/
-        //recrrido en anchura
+        //Recorrido en anchura
         private Queue<Label> c = new Queue<Label>();
         private void RecorridoAnchura(CVertice nodo)
         {
