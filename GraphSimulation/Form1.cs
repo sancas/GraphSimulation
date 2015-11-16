@@ -27,10 +27,8 @@ namespace GraphSimulation
         private Arco ventanaArco; // ventana para agregar los arcos
         private Recorrido ventanaRecorrido; // ventana para seleccionar el nodo inicial del recorrido
         private string recorrido;//variable que guarda el recorrido que se realizo 
-        private string distancias;
         private Stopwatch Duracion;
         private Eliminarcs eliminarnodo;
-        private Algoritmos algoritmo = new Algoritmos();
         private SaveFileDialog VentanaGuardar;
         private OpenFileDialog VentanaCargar;
         private int tamaño, aristas = 0, nodos = 0;
@@ -38,7 +36,6 @@ namespace GraphSimulation
         private Label[] r;
         private int numeronodos = 0, opc;
         private Label[] arreglo, arreglo2;
-        private bool bandera= true;
         private List<CVertice> nodosRuta; // Lista de nodos utilizada para almacenar la ruta
         private bool buscarRuta = false;
         private double peso = 0.0;
@@ -46,6 +43,7 @@ namespace GraphSimulation
         private AgregarArcos nuevoArco;
         private bool EsDigrafo;
         private bool loading;
+        private int tiempo; 
 
         public Form1()
         {
@@ -59,7 +57,7 @@ namespace GraphSimulation
             miGrafo = new NuevoGrafo();
             nuevoArco = new AgregarArcos();
             loading = false;
-            distancias = "";
+            tiempo = 100;
             recorrido = "";
             VentanaGuardar = new SaveFileDialog();
             VentanaCargar = new OpenFileDialog();
@@ -68,37 +66,38 @@ namespace GraphSimulation
 
         public void OpenFile(string filePath)
         {
-            loading = true;
-            aristas = 0;
-            nodos = 0;
-            SaveAndLoad myLoad = new SaveAndLoad();
-            grafo = myLoad.ReadFromBinaryFile<CGrafo>(filePath);
-            miGrafo.control = true;
-            btnNewFile.PerformClick();
-            grafo.DibujarGrafo(pbCanvas.CreateGraphics());
-            numeronodos = grafo.nodos.Count;
+            loading = true; //Se marca la bandera cargando como verdadero
+            aristas = 0; //El numero de aristas del grafo se resetea
+            nodos = 0; //El numero de nodos del grafo se resetea
+            SaveAndLoad myLoad = new SaveAndLoad(); //Instancia de objeto SaveAndLoad
+            grafo = myLoad.ReadFromBinaryFile<CGrafo>(filePath); //Convertimos de binario a CGrafo con la clase SaveAndLoad
+            miGrafo.control = true; //Marcamos la varible como true
+            btnNewFile.PerformClick(); //Simulamos un click en el boton NewFile
+            grafo.DibujarGrafo(pbCanvas.CreateGraphics()); //Dibujamos el grafo cargado en el Canvas
+            numeronodos = grafo.nodos.Count; //Actualizamos el numero de nodos
             foreach (CVertice nodo in grafo.nodos)
             {
                 nodos++;
                 foreach (CArco a in nodo.ListaAdyacencia)
                     aristas++;
             }
-            if (nodos != 0)
+            if (nodos != 0) //Si el grafo tiene nodos
             {
-                btnDelNode.Enabled = true;
-                rbnBAgregarArista.Enabled = true;
-                if (aristas != 0)
+                btnDelNode.Enabled = true; //Habilitar el boton borrar nodo
+                rbnBAgregarArista.Enabled = true; //Habilitar el boton agregar arista
+                if (aristas != 0) //Si tiene aristas
                 {
-                    rbnEliminarArista.Enabled = true;
-                    rbnWarshall.Enabled = true;
-                    rbnDijk.Enabled = true;
-                    rbnBKruskal.Enabled = true;
-                    rbnBPrim.Enabled = true;
-                    btnRecorridoAnchura.Enabled = true;
-                    btnRecorridoProfundidad.Enabled = true;
+                    rbnEliminarArista.Enabled = true; //Habilitar el boton eliminar arista
+                    rbnWarshall.Enabled = true; //Habilitar el boton del algoritmo Warshall
+                    rbnDijk.Enabled = true; //Habilitar el boton del algoritmo Dijkstra
+                    rbnBKruskal.Enabled = true; //Habilitar el boton del algoritmo Kruskal
+                    rbnBPrim.Enabled = true; //Habilitar el boton del algoritmo Prim
+                    rbnWarshallND.Enabled = true; //Habilitar el boton del algoritmo Warshall no dirigido
+                    btnRecorridoAnchura.Enabled = true; //Habilitar recorrido anchura
+                    btnRecorridoProfundidad.Enabled = true; //Habilitar recorrido profundidad
                 }
             }
-            loading = false;
+            loading = false; //Ya no se esta cargando
         }
 
         protected void HabilitarControles()
@@ -108,6 +107,7 @@ namespace GraphSimulation
             rbnDijk.Enabled = true;
             rbnBPrim.Enabled = true;
             rbnBKruskal.Enabled = true;
+            rbnWarshallND.Enabled = true;
             btnRecorridoAnchura.Enabled = true;
             btnRecorridoProfundidad.Enabled = true;
             rbnBAgregarArista.Enabled = true;
@@ -120,6 +120,7 @@ namespace GraphSimulation
             rbnDijk.Enabled = false;
             rbnBKruskal.Enabled = false;
             rbnBPrim.Enabled = false;
+            rbnWarshallND.Enabled = false;
             btnRecorridoAnchura.Enabled = false;
             btnRecorridoProfundidad.Enabled = false;
             rbnBAgregarArista.Enabled = false;
@@ -127,86 +128,87 @@ namespace GraphSimulation
 
         private void btnNewFile_Click(object sender, EventArgs e)
         {
-            if(!loading)
-                miGrafo.ShowDialog();
-            if (miGrafo.control || loading)
+            if(!loading) //Si no se esta cargando
+                miGrafo.ShowDialog(); //Mostrar el dialogo para crear un nuevo grafo
+            if (miGrafo.control || loading) //Si el dialogo regreso true o si se esta cargando
             {
-                if (loading)
+                if (loading) //Si se esta cargando
                 {
-                    if (grafo.DiGrafo)
+                    if (grafo.DiGrafo) //Si es un grafo dirigido
                     {
-                        rbPDigrafos.Visible = true;
-                        rbPNoDigrafos.Visible = false;
-                        EsDigrafo = true;
+                        rbPDigrafos.Visible = true; //Habilitar el panel de Digrafos
+                        rbPNoDigrafos.Visible = false; //Deshabilitar el panel de no Digrafos
+                        EsDigrafo = true; //Guardar que es digrafo
                     }
-                    else
+                    else //Si no es dirigido
                     {
-                        rbPNoDigrafos.Visible = true;
-                        rbPDigrafos.Visible = false;
-                        EsDigrafo = false;
+                        rbPNoDigrafos.Visible = true; //Habilitar el panel de no Digrafos
+                        rbPDigrafos.Visible = false; //Deshabilitar el panel de Digrafos
+                        EsDigrafo = false; //Guardar que no es digrafo
                     }
                 }
-                else if (miGrafo.rbtnDigrafo.Checked)
+                else if (miGrafo.rbtnDigrafo.Checked) //Sino se esta cargando, Si se chequeo que es digrafo
                 {
-                    grafo = new CGrafo(true);
+                    grafo = new CGrafo(true); //Crear un grafo digrafo
                     rbPDigrafos.Visible = true;
                     rbPNoDigrafos.Visible = false;
                     EsDigrafo = true;
                 }
-                else if (miGrafo.rbtnNoDigrafo.Checked)
+                else if (miGrafo.rbtnNoDigrafo.Checked) //Sino si se chequeo 
                 {
-                    grafo = new CGrafo(false);
+                    grafo = new CGrafo(false); //Crear un grafo no dirigido
                     rbPNoDigrafos.Visible = true;
                     rbPDigrafos.Visible = false;
                     EsDigrafo = false;
                 }
-                pbCanvas.Dock = DockStyle.Fill;
-                pbCanvas.Enabled = true;
-                pbCanvas.Visible = true;
-                btnSaveFile.Enabled = true;
-                btnQuickSaveFile.Enabled = true;
-                btnNewNode.Enabled = true;
+                pbCanvas.Dock = DockStyle.Fill; //Le decimos al Canvas que abarque todo el espacio
+                pbCanvas.Enabled = true; //Lo habilitamos
+                pbCanvas.Visible = true; //Lo hacemos visible
+                btnSaveFile.Enabled = true; //Activamos el boton guardar grafo
+                btnQuickSaveFile.Enabled = true; //Activamos el boton guardar del QuickMenu
+                btnNewNode.Enabled = true; //Habilitamos el boton nuevoNodo
             }
         }
 
         private void btnSaveFile_Click(object sender, EventArgs e)
         {
-            SaveAndLoad mySave = new SaveAndLoad();
+            SaveAndLoad mySave = new SaveAndLoad(); //Instancia de objeto SaveAndLoad
 
-            VentanaGuardar.InitialDirectory = "c:\\";
-            VentanaGuardar.Filter = "graph files (*.graph)|*.graph";
-            VentanaGuardar.FilterIndex = 2;
-            VentanaGuardar.RestoreDirectory = true;
+            VentanaGuardar.InitialDirectory = "c:\\"; //Directorio inicial para el SaveDialog
+            VentanaGuardar.Filter = "graph files (*.graph)|*.graph"; //Filtro de archivos
+            VentanaGuardar.FilterIndex = 2; //Indice del filtr
+            VentanaGuardar.RestoreDirectory = true; //Volver a abrir donde se cerro
 
-            DialogResult result = VentanaGuardar.ShowDialog(); // Show the dialog.
-            if (result == DialogResult.OK) // Test result.
+            DialogResult result = VentanaGuardar.ShowDialog(); //Mostrar la ventana de guardado
+            if (result == DialogResult.OK) // Si fue satisfactorio
             {
-                string file = VentanaGuardar.FileName;
-                mySave.WriteToBinaryFile<CGrafo>(file, grafo, false);
+                string file = VentanaGuardar.FileName; //Guardamosla direccion del archivo
+                mySave.WriteToBinaryFile<CGrafo>(file, grafo, false); //Guardamos un archivo .graph
+                // en la direccion que cotiene un objeto tipo CGrafo en binario
             }
         }
 
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
-            loading = true;
-            aristas = 0;
-            nodos = 0;
-            SaveAndLoad myLoad = new SaveAndLoad();
+            loading = true; //Se marca la bandera cargando como verdadero
+            aristas = 0; //El numero de aristas del grafo se resetea
+            nodos = 0; //El numero de nodos del grafo se resetea
+            SaveAndLoad myLoad = new SaveAndLoad(); //Instancia de objeto SaveAndLoad
 
-            VentanaCargar.InitialDirectory = "c:\\";
-            VentanaCargar.Filter = "graph files (*.graph)|*.graph";
-            VentanaCargar.FilterIndex = 2;
-            VentanaCargar.RestoreDirectory = true;
+            VentanaCargar.InitialDirectory = "c:\\"; //Directorio inicial para el LoadDialog
+            VentanaCargar.Filter = "graph files (*.graph)|*.graph"; //Filtro de archivos
+            VentanaCargar.FilterIndex = 2; //Indice del filtro
+            VentanaCargar.RestoreDirectory = true; //Volver a abrir donde se cerro
 
-            DialogResult result = VentanaCargar.ShowDialog(); // Show the dialog.
-            if (result == DialogResult.OK) // Test result.
+            DialogResult result = VentanaCargar.ShowDialog(); //Mostrar la ventana de carga
+            if (result == DialogResult.OK) // Si fue satisfactorio
             {
-                string file = VentanaCargar.FileName;
-                grafo = myLoad.ReadFromBinaryFile<CGrafo>(file);
-                miGrafo.control = true;
-                btnNewFile.PerformClick();
-                grafo.DibujarGrafo(pbCanvas.CreateGraphics());
-                numeronodos = grafo.nodos.Count;
+                string file = VentanaCargar.FileName; //Guardamos la direccion del archivo
+                grafo = myLoad.ReadFromBinaryFile<CGrafo>(file); //Convertimos de binario a CGrafo con la clase SaveAndLoad
+                miGrafo.control = true; //Marcamos la varible como true
+                btnNewFile.PerformClick(); //Simulamos un click en el boton NewFile
+                grafo.DibujarGrafo(pbCanvas.CreateGraphics()); //Dibujamos el grafo cargado en el Canvas
+                numeronodos = grafo.nodos.Count; //Actualizamos el numero de nodos
                 foreach (CVertice nodo in grafo.nodos)
                 {
                     nodos++;
@@ -214,22 +216,23 @@ namespace GraphSimulation
                         aristas++;
                 }
             }
-            if (nodos != 0)
+            if (nodos != 0) //Si el grafo tiene nodos
             {
-                btnDelNode.Enabled = true;
-                rbnBAgregarArista.Enabled = true;
-                if (aristas != 0)
+                btnDelNode.Enabled = true; //Habilitar el boton borrar nodo
+                rbnBAgregarArista.Enabled = true; //Habilitar el boton agregar arista
+                if (aristas != 0) //Si tiene aristas
                 {
-                    rbnEliminarArista.Enabled = true;
-                    rbnWarshall.Enabled = true;
-                    rbnDijk.Enabled = true;
-                    rbnBKruskal.Enabled = true;
-                    rbnBPrim.Enabled = true;
-                    btnRecorridoAnchura.Enabled = true;
-                    btnRecorridoProfundidad.Enabled = true;
+                    rbnEliminarArista.Enabled = true; //Habilitar el boton eliminar arista
+                    rbnWarshall.Enabled = true; //Habilitar el boton del algoritmo Warshall
+                    rbnDijk.Enabled = true; //Habilitar el boton del algoritmo Dijkstra
+                    rbnBKruskal.Enabled = true; //Habilitar el boton del algoritmo Kruskal
+                    rbnBPrim.Enabled = true; //Habilitar el boton del algoritmo Prim
+                    rbnWarshallND.Enabled = true; //Habilitar el boton del algoritmo Warshall no dirigido
+                    btnRecorridoAnchura.Enabled = true; //Habilitar recorrido anchura
+                    btnRecorridoProfundidad.Enabled = true; //Habilitar recorrido profundidad
                 }
             }
-            loading = false;
+            loading = false; //Ya no se esta cargando
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -304,24 +307,12 @@ namespace GraphSimulation
                     aristas++;
             }
             if (grafo.nodos.Count == 0)
-            {                
-                btnDelNode.Enabled = false;
-                rbnRestaurar.Enabled = false;
-                rbnWarshall.Enabled = false;
-                rbnDijk.Enabled = false;
-                btnRecorridoAnchura.Enabled = false;
-                btnRecorridoProfundidad.Enabled = false;
+            {
+                DesHabilitarControles();
             }
-            
-            
             if (aristas == 0)
             {
-                rbnEliminarArista.Enabled = false;
-                rbnRestaurar.Enabled = false;
-                rbnWarshall.Enabled = false;
-                rbnDijk.Enabled = false;
-                btnRecorridoAnchura.Enabled = false;
-                btnRecorridoProfundidad.Enabled = false;
+                DesHabilitarControles();
             }
         }
 
@@ -400,7 +391,6 @@ namespace GraphSimulation
                     NodoOrigen = null;
                     NodoDestino = null;
                     pbCanvas.Refresh();
-                    
                     break;
             }
         }
@@ -536,7 +526,7 @@ namespace GraphSimulation
                     MessageBox.Show("Ese Nodo no se encuentra en el grafo", "Error Nodo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-            Thread.Sleep(1000);
+            Thread.Sleep(tiempo);
             grafo.RestablecerGrafo(graficoTemporal);
             pbCanvas.Refresh();
         }
@@ -591,16 +581,11 @@ namespace GraphSimulation
                     PnSimulador.Visible = true;
                     grafo.Desmarcar();
                     recorrido = "";
-                    distancias = "";
                     Duracion.Start();
                     dijkstra(grafo.BuscarVertice(ventanaRecorrido.txtNodo.Text));
                     Duracion.Stop();
-                    if (bandera)
-                    {
-                        MessageBox.Show("las distancias de los nodos son respectivamente:\nRecorrido de nodos:       " + recorrido + "\nDistancias de los nodos: " + distancias + "\n Y la duracion del recorrido fue de: " + Duracion.ElapsedMilliseconds + " miliSegundos");
-                        t = Duracion.ElapsedMilliseconds / 1000;
-                        label1.Text = "El tiempo recorrido es de: " + t.ToString() + "seg";
-                    }
+                    t = Duracion.ElapsedMilliseconds / 1000;
+                    label1.Text = "El tiempo recorrido es de: " + t.ToString() + "seg";
                     Duracion.Reset();
                 }
                 else
@@ -670,6 +655,7 @@ namespace GraphSimulation
             rbnBAgregarArista.Enabled = false;
             rbnBKruskal.Enabled = false;
             rbnBPrim.Enabled = false;
+            rbnWarshallND.Enabled = false;
             splitContainer1.Panel2Collapsed = true;
             lbRecorrido.Text = "";
             label1.Text = "";
@@ -705,9 +691,13 @@ namespace GraphSimulation
                         {
                             grafo.Colorear(nodosRuta[x]);
                             pbCanvas.Refresh();
-                            if(x + 1 < nodosRuta.Count)
+                            if (x + 1 < nodosRuta.Count)
+                            {
                                 grafo.ColoArista(nodosRuta[x].Valor, nodosRuta[x + 1].Valor);
-                            Thread.Sleep(500);
+                                if (!EsDigrafo)
+                                    grafo.ColoArista(nodosRuta[x + 1].Valor, nodosRuta[x].Valor);
+                            }
+                            Thread.Sleep(tiempo);
                         }
                         buscarRuta = false;
                     }
@@ -744,10 +734,10 @@ namespace GraphSimulation
             splitContainer1.Panel2Collapsed = true;
         }
 
-    /*****************************************************************************/
-   /*                                 ALGORITMOS                                */
-  /*****************************************************************************/
-//recrrido en anchura
+        /*****************************************************************************/
+        /*                                 ALGORITMOS                                */
+        /*****************************************************************************/
+        //recrrido en anchura
         private Queue<Label> c = new Queue<Label>();
         private void RecorridoAnchura(CVertice nodo)
         {
@@ -764,51 +754,47 @@ namespace GraphSimulation
             grafo.Colorear(nodo);
             pbCanvas.Refresh();
             mostrarCola(cola);
-            Thread.Sleep(1000);
+            Thread.Sleep(tiempo);
             recorrido += nodo.Valor + " ";
             lbRecorrido.Text = recorrido;
             while (cola.Count != 0)
-            {               
+            {
                 temp = cola.Dequeue();
                 foreach (CArco arco in temp.ListaAdyacencia)
                 {
                     if (arco.nDestino.Visitado == false)
-                    {                                           
-                        cola.Enqueue(arco.nDestino);                       
+                    {
+                        cola.Enqueue(arco.nDestino);
                     }
                 }
                 mostrarCola(cola);
                 foreach (CArco arco in temp.ListaAdyacencia)
                 {
-                   
+
                     if (arco.nDestino.Visitado == false)
-                    {                       
+                    {
                         recorrido += arco.nDestino.Valor + " ";
                         lbRecorrido.Text = recorrido;
                         arco.nDestino.Visitado = true;
                         arco.nDestino.Padre = temp;
                         grafo.Colorear(arco.nDestino);
                         pbCanvas.Refresh();
-                        Thread.Sleep(1000);
-                    } 
+                        Thread.Sleep(tiempo);
+                    }
                 }
 
-            } 
-            if (grafo.BuscarDesmarcados() != null)
-            {
-                RecorridoAnchura(grafo.BuscarDesmarcados());
             }
         }
-        private void mostrarCola(Queue<CVertice>q)
+        private void mostrarCola(Queue<CVertice> q)
         {
             limpiar(c);
             Point xy = new Point(14, 64);
-           Queue<Label> colalabel = new Queue<Label>();
+            Queue<Label> colalabel = new Queue<Label>();
             foreach (CVertice n in q)
             {
                 Label l = new Label();
                 l.Text = n.Valor;
-                colalabel.Enqueue(l);   
+                colalabel.Enqueue(l);
             }
             foreach (Label l in colalabel)
             {
@@ -820,7 +806,7 @@ namespace GraphSimulation
                 l.Location = xy;
                 l.BorderStyle = BorderStyle.FixedSingle;
                 PnSimulador.Controls.Add(l);
-                xy += new Size(25, 0);   
+                xy += new Size(25, 0);
             }
             PnSimulador.Refresh();
             c = colalabel;
@@ -830,13 +816,13 @@ namespace GraphSimulation
             foreach (Label l in labels)
                 PnSimulador.Controls.Remove(l);
         }
-//recorrido en Profundidad
+        //recorrido en Profundidad
         private Stack<Label> Pila = new Stack<Label>();
         private void RecorridoProfundidad(CVertice nodo)
         {
             rbnRestaurar.Enabled = true;
             opc = 2;
-            LblSimu.Text ="Simulacion: Recorrido en Profundidad";
+            LblSimu.Text = "Simulacion: Recorrido en Profundidad";
             label2.Text = "Pila:";
             label1.Text = "RECORRIDO:";
             CVertice temp = new CVertice();
@@ -846,7 +832,7 @@ namespace GraphSimulation
             while (pila.Count != 0)
             {
                 mostrarPila(pila);
-                temp = pila.Pop(); 
+                temp = pila.Pop();
                 if (temp.Visitado == false)
                 {
                     recorrido += temp.Valor + " ";
@@ -854,18 +840,13 @@ namespace GraphSimulation
                     temp.Visitado = true;
                     grafo.Colorear(temp);
                     pbCanvas.Refresh();
-                    Thread.Sleep(1000);
+                    Thread.Sleep(tiempo);
                     foreach (CArco arco in temp.ListaAdyacencia)
                     {
                         pila.Push(arco.nDestino);
                     }
-                } 
+                }
             }
-            if (grafo.BuscarDesmarcados() != null)
-            {
-                RecorridoProfundidad(grafo.BuscarDesmarcados());
-            }
-           
         }
         private void mostrarPila(Stack<CVertice> p)
         {
@@ -898,7 +879,7 @@ namespace GraphSimulation
             foreach (Label l in labels)
                 PnSimulador.Controls.Remove(l);
         }
-       
+        // Algortimo de dijkstra   
         private void dijkstra(CVertice inicio)
         {
             if (inicio.ListaAdyacencia.Count != 0)
@@ -932,21 +913,19 @@ namespace GraphSimulation
                 grafo.Colorear(inicio);
                 pbCanvas.Refresh();
                 mostrarArreglo(inicio);
-                Thread.Sleep(100);
-                while (grafo.BuscarDesmarcados() != null)
+                Thread.Sleep(tiempo);
+                while (grafo.nododistanciaminima() != null)
                 {
-                    grafo.LlenarDesmarcados();
                     CVertice nododismin = grafo.nododistanciaminima();
                     nododismin.Visitado = true;
                     grafo.Colorear(nododismin);
-                    grafo.eliminardesmarcado(nododismin);
                     pbCanvas.Refresh();
                     foreach (CArco arco in nododismin.ListaAdyacencia)
                     {
                         if (arco.nDestino.distancianodo > nododismin.distancianodo + arco.peso)
                         {
                             if (arco.nDestino.pesoasignado)
-                                grafo.DibujarEntrantes(arco.nDestino);
+                            { grafo.DibujarEntrantes(arco.nDestino); }
                             arco.nDestino.distancianodo = nododismin.distancianodo + arco.peso;
                             arco.nDestino.pesoasignado = true;
                             arco.color = Color.LimeGreen;
@@ -954,51 +933,37 @@ namespace GraphSimulation
                         }
                     }
                     mostrarArreglo(inicio);
-                    Thread.Sleep(100);
-                }
-                for (int j = 0; j < n; j++)
-                {
-                    recorrido += grafo.nodos[j].Valor + "|";
-                    distancias += grafo.nodos[j].distancianodo.ToString() + "|";
+                    Thread.Sleep(tiempo);
                 }
             }
             else
             {
-                MessageBox.Show("El nodo que ha elegino no puede acceder la los demas nodos del grafo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                bandera = false;
+                rbnRestaurar.Enabled = true;
+                MessageBox.Show("El nodo que ha elegino no tiene nodos adyacentes"
+                    , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void mostrarArreglo(CVertice i)
         {
             int m = int.MaxValue;
-            //MessageBox.Show(m.ToString());
-            limpiar(arreglo,arreglo2);
+            limpiar(arreglo, arreglo2);
             Point xy = new Point(14, 64);
             Point xy2 = new Point(14, 94);
             Label[] ArregloNodos = new Label[numeronodos];
             Label[] ArregloDistnacias = new Label[numeronodos];
-            Label label = new Label();
-            Label label2 = new Label();
-            label.Text = i.Valor;
-            ArregloNodos[0] = label;
-            label2.Text = i.distancianodo.ToString();
-            ArregloDistnacias[0] = label2;
-            for (int j = 1; j < numeronodos; j++)
-            {   
-                if (grafo.nodos[j].Valor != i.Valor)
+            for (int j = 0; j < numeronodos; j++)
+            {
+                Label label = new Label();
+                Label label2 = new Label();
+                label.Text = grafo.nodos[j].Valor;
+                ArregloNodos[j] = label;
+                if (grafo.nodos[j].distancianodo == m || grafo.nodos[j].distancianodo == int.MaxValue)
                 {
-                    Label la = new Label();
-                    Label lab = new Label();
-                    la.Text = grafo.nodos[j].Valor;
-                    ArregloNodos[j] = la;
-                    if (grafo.nodos[j].distancianodo == m || grafo.nodos[j].distancianodo == 10000)
-                    {
-                        lab.Text = "inf";
-                    }
-                    else
-                    { lab.Text = grafo.nodos[j].distancianodo.ToString(); }
-                    ArregloDistnacias[j] = lab;
+                    label2.Text = "inf";
                 }
+                else
+                { label2.Text = grafo.nodos[j].distancianodo.ToString(); }
+                ArregloDistnacias[j] = label2;
             }
             foreach (Label l in ArregloNodos)
             {
@@ -1262,6 +1227,26 @@ namespace GraphSimulation
             }
         }
 
+        private void txtTime_TextBoxTextChanged(object sender, EventArgs e)
+        {
+            if (txtTime.TextBoxText.Trim() == "")
+                tiempo = 0;
+            else
+            {
+                int.TryParse(txtTime.TextBoxText, out tiempo);
+            }
+        }
+
+        private void txtTime_TextBoxKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
         private int[,] AlgPrim(CVertice nodoInicial, int[,] Matriz)
         {  //Llega la matriz a la que le vamos a aplicar el algoritmo
             bool[] marcados = new bool[grafo.nodos.Count]; //Creamos un vector booleano, para saber cuales están marcados
@@ -1273,7 +1258,7 @@ namespace GraphSimulation
             marcados[grafo.nodos.IndexOf(vertice)] = true;//marcamos el primer nodo
             grafo.Colorear(vertice);
             pbCanvas.Refresh();
-            Thread.Sleep(500);
+            Thread.Sleep(tiempo);
             int aux = -1;
             if (!TodosMarcados(marcados))
             { //Mientras que no todos estén marcados
@@ -1323,7 +1308,7 @@ namespace GraphSimulation
                     }
                 }
                 pbCanvas.Refresh();
-                Thread.Sleep(100);
+                Thread.Sleep(tiempo);
             }
             return Final;
         }
@@ -1410,14 +1395,14 @@ namespace GraphSimulation
                     sum += min;
                     grafo.Colorear(grafo.nodos[a]);
                     pbCanvas.Refresh();
-                    Thread.Sleep(100);
+                    Thread.Sleep(tiempo);
                     grafo.ColoArista(grafo.nodos[a].Valor.ToString(), grafo.nodos[b].ToString());
                     grafo.ColoArista(grafo.nodos[b].ToString(), grafo.nodos[a].ToString());
                     pbCanvas.Refresh();
-                    Thread.Sleep(100);
+                    Thread.Sleep(tiempo);
                     grafo.Colorear(grafo.nodos[b]);
                     pbCanvas.Refresh();
-                    Thread.Sleep(1000);
+                    Thread.Sleep(tiempo);
                     p[v] = u;
                 }
 

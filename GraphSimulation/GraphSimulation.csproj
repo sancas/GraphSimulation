@@ -70,7 +70,6 @@
     <Compile Include="AgregarArcos.Designer.cs">
       <DependentUpon>AgregarArcos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Algoritmos.cs" />
     <Compile Include="Arco.cs">
       <SubType>Form</SubType>
     </Compile>

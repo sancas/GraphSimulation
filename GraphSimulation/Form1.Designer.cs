@@ -61,6 +61,7 @@
             this.rbPNoDigrafos = new System.Windows.Forms.RibbonPanel();
             this.rbnBPrim = new System.Windows.Forms.RibbonButton();
             this.rbnBKruskal = new System.Windows.Forms.RibbonButton();
+            this.rbnWarshallND = new System.Windows.Forms.RibbonButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pbCanvas = new System.Windows.Forms.PictureBox();
@@ -79,6 +80,8 @@
             this.ribbonOrbMenuItem3 = new System.Windows.Forms.RibbonOrbMenuItem();
             this.ribbonSeparator1 = new System.Windows.Forms.RibbonSeparator();
             this.ribbonOrbMenuItem4 = new System.Windows.Forms.RibbonOrbMenuItem();
+            this.rbPSimulacion = new System.Windows.Forms.RibbonPanel();
+            this.txtTime = new System.Windows.Forms.RibbonTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -263,6 +266,7 @@
             // 
             this.rbTGrafo.Panels.Add(this.rbPNodos);
             this.rbTGrafo.Panels.Add(this.rbPAristas);
+            this.rbTGrafo.Panels.Add(this.rbPSimulacion);
             this.rbTGrafo.Tag = null;
             this.rbTGrafo.Text = "Grafo";
             this.rbTGrafo.ToolTip = null;
@@ -494,6 +498,7 @@
             // 
             this.rbPNoDigrafos.Items.Add(this.rbnBPrim);
             this.rbPNoDigrafos.Items.Add(this.rbnBKruskal);
+            this.rbPNoDigrafos.Items.Add(this.rbnWarshallND);
             this.rbPNoDigrafos.Tag = null;
             this.rbPNoDigrafos.Text = "Algoritmos";
             // 
@@ -528,6 +533,22 @@
             this.rbnBKruskal.ToolTipTitle = null;
             this.rbnBKruskal.Value = null;
             this.rbnBKruskal.Click += new System.EventHandler(this.rbnBKruskal_Click);
+            // 
+            // rbnWarshallND
+            // 
+            this.rbnWarshallND.AltKey = null;
+            this.rbnWarshallND.CheckedGroup = null;
+            this.rbnWarshallND.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
+            this.rbnWarshallND.DropDownArrowSize = new System.Drawing.Size(5, 3);
+            this.rbnWarshallND.Image = ((System.Drawing.Image)(resources.GetObject("rbnWarshallND.Image")));
+            this.rbnWarshallND.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnWarshallND.SmallImage")));
+            this.rbnWarshallND.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
+            this.rbnWarshallND.Tag = null;
+            this.rbnWarshallND.Text = "Warshall";
+            this.rbnWarshallND.ToolTip = null;
+            this.rbnWarshallND.ToolTipTitle = null;
+            this.rbnWarshallND.Value = null;
+            this.rbnWarshallND.Click += new System.EventHandler(this.rbnWarshall_Click);
             // 
             // panel1
             // 
@@ -756,6 +777,27 @@
             this.ribbonOrbMenuItem4.ToolTipTitle = null;
             this.ribbonOrbMenuItem4.Value = null;
             // 
+            // rbPSimulacion
+            // 
+            this.rbPSimulacion.Items.Add(this.txtTime);
+            this.rbPSimulacion.Tag = null;
+            this.rbPSimulacion.Text = "Simulacion";
+            // 
+            // txtTime
+            // 
+            this.txtTime.AltKey = null;
+            this.txtTime.CheckedGroup = null;
+            this.txtTime.Image = null;
+            this.txtTime.Tag = null;
+            this.txtTime.Text = "Tiempo";
+            this.txtTime.TextBoxText = "100";
+            this.txtTime.TextBoxWidth = 50;
+            this.txtTime.ToolTip = null;
+            this.txtTime.ToolTipTitle = null;
+            this.txtTime.Value = null;
+            this.txtTime.TextBoxTextChanged += new System.EventHandler(this.txtTime_TextBoxTextChanged);
+            this.txtTime.TextBoxKeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTime_TextBoxKeyPress);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -832,6 +874,9 @@
         private System.Windows.Forms.RibbonButton rbnBAgregarArista;
         private System.Windows.Forms.RibbonButton rbnBPrim;
         private System.Windows.Forms.RibbonButton rbnBKruskal;
+        private System.Windows.Forms.RibbonButton rbnWarshallND;
+        private System.Windows.Forms.RibbonPanel rbPSimulacion;
+        private System.Windows.Forms.RibbonTextBox txtTime;
     }
 }
 
