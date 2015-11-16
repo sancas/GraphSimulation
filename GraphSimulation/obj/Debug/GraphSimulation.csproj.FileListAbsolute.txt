@@ -76,7 +76,6 @@ J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulati
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.pdb
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.exe
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\bin\Debug\GraphSimulation.pdb
-J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.csprojResolveAssemblyReference.cache
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.AgregarArcos.resources
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Arco.resources
 J:\Documents\Universidad\GraphSimulation\GraphSimulation\obj\Debug\GraphSimulation.Eliminarcs.resources

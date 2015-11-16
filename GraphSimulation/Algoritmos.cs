@@ -138,11 +138,6 @@ namespace GraphSimulation
             {
                 a.color = Color.Red;
             }
-          
-           
         }
-
-
-
     }
 }
